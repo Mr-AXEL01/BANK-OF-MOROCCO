@@ -158,7 +158,7 @@
             <h1 class="font-bold">
             Notification de Sécurité 
             </h1>
-            <p> Votre sécurité est notre priorité. Assurez-vous d'utiliser<br> des mots de passe forts et de ne jamais partager vos <br>informations personnelles.
+            <p> Votre sécurité est notre priorité, Assurez-vous d'utiliser<br> des mots de passe forts et de ne jamais partager vos <br>informations personnelles.
                  Consultez notre section de sécurité<br> pour en savoir plus sur les mesures que nous prenons<br> pour protéger vos comptes</p>
         </div>
         <div class=" text-center flex h-[100%] flex-col items-center gap-[65px] pt-[25px]">
