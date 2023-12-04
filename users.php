@@ -1,6 +1,5 @@
 <?php
-@include "DataBase.php";
-
+include "DataBase.php";
 
 
 if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
@@ -96,6 +95,7 @@ if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
             <a href="registre.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">Add USERS</a>
 
         </div>
+      
         <?php
         // Check if the 'submit' and 'bankid' are set, indicating that the form is submitted
         if (isset($_POST['users']) && isset($_POST['agencyId'])) {
@@ -176,14 +176,33 @@ if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
                         </tr>";
                 }
                 echo '</table>';
+                
+          
+                
             } else {
                 echo "<p class='text-center'>0 results</p>";
             }
         } else {
-            // Handle the case when 'submit' and 'bankid' are not set (initial page load)
-            // Fetch data for 'compts' table
-            $sqlATM = "SELECT * FROM users";
+
+            $start = 0;
+            $rows_per_page = 2;
+            
+            $record = "SELECT * FROM users ";
+            $result3 = $conn->query($record);
+            $num_rows = mysqli_num_rows($result3);
+            
+            $sqlATM = "SELECT * FROM users"; // Move the definition here
+            
+            $pages = ceil($num_rows / $rows_per_page);
+            
+            if (isset($_GET['page-nr'])) {
+                $page = $_GET['page-nr'] - 1;
+                $start = $page * $rows_per_page;
+            }
+            
+            $sqlATM .= " LIMIT $start, $rows_per_page"; // Append the LIMIT clause here
             $result2 = $conn->query($sqlATM);
+           
 
             if ($result2->num_rows > 0) {
                 echo '<table class="leading-9  w-[100%] text-center h-[7vh] items-start text-black">';
@@ -232,14 +251,48 @@ if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
                             </td>
                         </tr>";
                 }
-                echo '</table>';
+                echo '</table>  ';
+              
+
+                
+                
             } else {
                 echo "<p class='text-center'>0 results</p>";
             }
         }
-        $conn->close();
+       
         ?>
+      
+<div class=" mx-auto justify-center items-center mt-10">
+
+<nav aria-label="Page navigation example">
+    <ul class="inline-flex -space-x-px">
+        <li>
+           
+            <a href="?page-nr=1"
+                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+
+       
+            </li>
+        <li>
+            <?php for($counter = 1; $counter <= $pages ; $counter++)  {?>
+            <a href="?page-nr=<?=$counter;?>"
+                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?= $counter;?></a>
+       <?php  } ?>
+            </li>
+        
+        <li>
+            <a href="?page-nr=<?=$pages ?>"
+                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+        </li>
+    </ul>
+</nav>
+
+
+</div>
+      
     </section>
+    
 
     <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
         <h2>Copyright © 2030 Hashtag Developer. All Rights Reserved</h2>
