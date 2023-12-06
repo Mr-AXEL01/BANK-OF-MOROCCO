@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 
 
     // Insert new bank into the 'bank' table
-    $insertQuery = "INSERT INTO transaction (type, amount,accountId)
+    $insertQuery = "INSERT INTO transaction (trans_type, amount,accountId)
      VALUES 
      ('$operation', '$amount', '$accountid')";
 
@@ -39,7 +39,7 @@ if (isset($_POST['transactionid']) && $_POST['editing'] === 'Edit') {
     $rows = mysqli_fetch_assoc($stk_trns_info);
 
     // Populate variables with retrieved data
-    $type = $rows["type"];
+    $type = $rows["trans_type"];
     $amount = $rows["amount"];
 }
 
