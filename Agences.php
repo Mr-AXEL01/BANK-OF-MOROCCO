@@ -1,22 +1,32 @@
 <?php
 @include "DataBase.php";
 
+// handel delete all 
+if (isset($_POST['delete_all'])) {
+    $deleteAll = "UPDATE agency set is_deleted = TRUE ;";
+    if ($conn->query($deleteAll) !== TRUE) {
+        echo "Error deleting address: " . $conn->error;
+    }
+}
+if (isset($_POST['reset'])) {
+    $deleteAll = "UPDATE agency set is_deleted = FALSE ;";
+    if ($conn->query($deleteAll) !== TRUE) {
+        echo "Error deleting address: " . $conn->error;
+    }
+}
+
 
 // Handle Delete action
 if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
     $id = $_POST['delete'];
 
-    // Delete associated records in the 'agency' table
-    $deleteAdress = "DELETE FROM adress WHERE agencyId = $id";
-    if ($conn->query($deleteAdress) !== TRUE) {
+    // Delete  in the 'agency' table using soft delete
+    $soft_delete = "UPDATE agency set is_deleted = TRUE WHERE agencyId = $id";
+    if ($conn->query($soft_delete) !== TRUE) {
         echo "Error deleting address: " . $conn->error;
     }
 
-    // Delete the record from the 'agency' table
-    $deleteAgencies = "DELETE FROM agency WHERE agencyId = $id";
-    if ($conn->query($deleteAgencies) !== TRUE) {
-        echo "Error deleting agency: " . $conn->error;
-    }
+    // 
 }
 
 
@@ -122,6 +132,9 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
                         </tr>
                     </thead>';
                 while ($row = $result->fetch_assoc()) {
+                    
+                        
+                   
                     echo '<form action="transaction.php" method="post" class="h-[10vh] items-start">';
                     echo "<tr>
                             <td class='border-[2px] border-black border-solid '>" . $row["agencyId"] . " </td>
@@ -153,6 +166,7 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
                             </form>
                         </td>
                         </tr>";
+                    
                 }
                 echo '</table>';
             } else {
@@ -161,7 +175,7 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
         } else {
             // Handle the case when 'submit' and 'bankid' are not set (initial page load)
             // Fetch data for 'compts' table
-            $sqlall = "SELECT * FROM `agency`";
+            $sqlall = "SELECT * FROM `agency` WHERE is_deleted = FALSE;";
             $result2 = $conn->query($sqlall);
 
             if ($result2->num_rows > 0) {
@@ -218,9 +232,14 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
             } else {
                 echo "<p class='text-center'>0 results</p>";
             }
+           
         }
         $conn->close();
         ?>
+        <form method="post">
+            <input value="RESET" type="submit" name="reset"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></input >
+            <input value="DELETE ALL" type="submit" name="delete_all"  class="bg-orange-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"></input >
+        </form>
     </section>
 
     <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
