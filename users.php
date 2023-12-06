@@ -41,6 +41,8 @@
         <!-- Meta tags and stylesheets go here -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
         <script src="https://cdn.tailwindcss.com"></script>
 
         <title>Gestionaire Bancaire</title>
@@ -89,7 +91,7 @@
                     </ul>
                 </nav>
                 <form action="users.php" method="post" class="flex items-center mr-[10px]">
-                    <input type="text" name="search" placeholder="Search UserName..." class="p-2 border border-gray-300 rounded-md" oninput="load_data(this.value)">
+                    <input type="text" name="search" placeholder="Search UserName..." class="p-2 border border-gray-300 rounded-md" >
                 </form>
             </header>
             <script src="navbar.js">
@@ -114,17 +116,26 @@
             <h2>Copyright © 2030 Hashtag Developer. All Rights Reserved</h2>
         </footer>
 
-        <script >
-          function load_data(search = '') {
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "usersaffich.php?search=" + search, true);
-    xhr.onload = function() {
-        document.getElementById('searched').innerHTML = xhr.responseText;
+        <script>
+    function load_data(search = '') {
+        $.ajax({
+            url: 'ajaxaffich/usersaffich.php',
+            type: 'GET',
+            data: { search: search },
+            success: function(response) {
+                $('#searched').html(response);
+            }
+        });
     }
-    xhr.send();
-}
-load_data();
-        </script>
+
+    $(document).ready(function() {
+        load_data(); 
+
+        $('input[name="search"]').on('input', function() {
+            load_data($(this).val());
+        });
+    });
+</script>
 
 
     </body>

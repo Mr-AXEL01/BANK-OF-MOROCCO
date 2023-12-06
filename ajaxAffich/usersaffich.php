@@ -1,7 +1,7 @@
 
 <?php
 
-@include "DataBase.php";
+@include "../DataBase.php";
 
 
 
@@ -135,7 +135,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                             
                             </td>
                             <td class='border-[2px] border-black border-solid '>
-                            <form action='Accounts.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-gray-900 bg-black hover:text-white text-white '>
+                            <form action='ajaxAffich/accountaffich.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-gray-900 bg-black hover:text-white text-white '>
 
                                 <input type='hidden' name='userid' value='" . $row["userId"] . "'>
                                 <input type='submit' name='submit'  value='Show'>
