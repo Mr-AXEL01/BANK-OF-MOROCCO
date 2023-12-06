@@ -35,6 +35,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
                             <th class="border-[2px] border-black border-solid w-[15%] ">ID</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Operation Type</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Amount</th>
+                            <th class="border-[2px] border-black border-solid w-[15%] ">Created at</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Edit</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Delete</th>
                         </tr>
@@ -45,6 +46,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
                             <td class='border-[2px] border-black border-solid '>" . $row["transactionId"] . " </td>
                             <td class='border-[2px] border-black border-solid '>" . $row["trans_type"] . "  </td>
                             <td class='border-[2px] border-black border-solid '> " . $row["amount"] . " MAD</td>
+                            <td class='border-[2px] border-black border-solid '> " . $row["created_at"] . " </td>
 
                          
                                
@@ -82,6 +84,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
                         <th class="border-[2px] border-black border-solid w-[15%] ">ID</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Operation Type</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Amount</th>
+                            <th class="border-[2px] border-black border-solid w-[15%] ">Created at</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Edit</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Delete</th>
                         </tr>
@@ -92,6 +95,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
                     <td class='border-[2px] border-black border-solid '>" . $row["transactionId"] . " </td>
                     <td class='border-[2px] border-black border-solid '> " . $row["trans_type"] . "</td>
                     <td class='border-[2px] border-black border-solid '> " . $row["amount"] . "  MAD</td>
+                    <td class='border-[2px] border-black border-solid '> " . $row["created_at"] . " </td>
 
 
                  
