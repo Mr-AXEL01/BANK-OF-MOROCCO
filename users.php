@@ -289,11 +289,11 @@ include "DataBase.php";
       
     </section>
     
-
+<?php
         // Delete the record from the 'bank' table
         $deleteuser = "DELETE FROM users WHERE userId = $id";
         $conn->query($deleteuser);
-    }
+            }
 
     $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
@@ -408,4 +408,4 @@ include "DataBase.php";
 
     </body>
 
-    </html>
+    </html> 
