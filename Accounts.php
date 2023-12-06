@@ -18,6 +18,7 @@ if (isset($_POST['deleteaccount']) && isset($_POST['delete'])) {
         echo "Error deleting agency: " . $conn->error;
     }
 }
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
 
 ?>
@@ -30,6 +31,8 @@ if (isset($_POST['deleteaccount']) && isset($_POST['delete'])) {
     <!-- Meta tags and stylesheets go here -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Gestionaire Bancaire</title>
     <style>
@@ -76,9 +79,11 @@ if (isset($_POST['deleteaccount']) && isset($_POST['delete'])) {
                     </li>
                 </ul>
             </nav>
-            <!-- buttons --->
-         
+            <form action="accounts.php" method="post" class="flex items-center mr-[10px]">
+                    <input type="text" name="search" placeholder="Search UserName..." class="p-2 border border-gray-300 rounded-md" >
+                </form>         
         </header>
+        <script src="navbar.js"> </script>
 
 
         <div class="flex justify-evenly items-center mb-[50px]">
@@ -86,144 +91,38 @@ if (isset($_POST['deleteaccount']) && isset($_POST['delete'])) {
             <a href="addaccounts.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">ADD ACCOUNTS</a>
 
         </div>
-        <?php
-        // Check if the 'submit' and 'bankid' are set, indicating that the form is submitted
-        if (isset($_POST['submit']) && isset($_POST['userid'])) {
-            $userid = $conn->real_escape_string($_POST['userid']);
-
-            // Fetch bank details based on the bankid
-            $user_sql = "SELECT * FROM users WHERE userid = '$userid'";
-            $user_result = $conn->query($user_sql);
-
-            if ($user_result->num_rows > 0) {
-                $user_row = $user_result->fetch_assoc();
-                echo "<div class ='flex w-[100%]  justify-center h-[60px] border-[2px] border-black border-solid items-center text-black'>";
-                echo "<p class='border-[2px] border-black border-solid w-[85%] h-[100%] flex items-center  justify-center'>Username : {$user_row["username"]}</p>";
-                echo "<p class='border-[2px] border-black border-solid w-[85%] h-[100%] flex items-center  justify-center'>first Name : {$user_row["firstName"]}</p>";
-                echo "<p class='border-[2px] border-black border-solid w-[85%] h-[100%] flex items-center  justify-center'>family Name : {$user_row["familyName"]}</p>";
-                echo "</div>";
-            }
-
-            // Fetch data based on the selected bankid for 'agency'
-            $sql = "SELECT * FROM `account` WHERE userid = '$userid'";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                echo '<table class="leading-9 h-[90%]  w-[100%] text-center text-black">';
-                echo '<thead>
-                        <tr>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">ID</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">RIB</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">Balance</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">Edit</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">Delete</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">Transactions</th>
-                        </tr>
-                    </thead>';
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                            <td class='border-[2px] border-black border-solid '>" . $row["accountId"] . " </td>
-                            <td class='border-[2px] border-black border-solid '>" . $row["RIB"] . "  MAD</td>
-                            <td class='border-[2px] border-black border-solid '> " . $row["balance"] . " </td>
-
-                         
-                               
-
-                            <td class='border-[2px] border-black border-solid '>
-                            <form action='addaccounts.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-blue-700 bg-blue-500 hover:text-white text-white '>
-                            <input type='hidden' name='operation' value='" . $row["accountId"] . "'>
-                            <input type='hidden' name='accountid' value='" . $row["accountId"] . "'>
-                            <input type='submit'  name='editing' value='Edit'>
-                        </form>
-                        
-                            </td>
-                            <td class='border-[2px] border-black border-solid '>
-                            <form action='accounts.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-red-700 bg-red-500 hover:text-white text-white '>
-                                <input type='hidden' name='delete' value='" . $row["accountId"] . "'>
-                                <input type='submit'  name='deleteaccount' value='Delete'>
-                            </form>
-                        </td>
-                        <td class='border-[2px] border-black border-solid '>
-                        <form action='transactions.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-gray-900 bg-black hover:text-white text-white '>
-
-                            <input type='hidden' name='accountid' value='" . $row["accountId"] . "'>
-                            <input type='submit' name='submit'  value='Show'>
-                            </form>
-                            </td>
-                        </tr>";
-                }
-                echo '</table>';
-            } else {
-                echo "<p class='text-center'>0 results</p>";
-            }
-        } else {
-            // Handle the case when 'submit' and 'bankid' are not set (initial page load)
-            // Fetch data for 'compts' table
-            $sqlall = "SELECT * FROM `account`";
-            $result2 = $conn->query($sqlall);
-
-            if ($result2->num_rows > 0) {
-                echo '<table class="leading-9  w-[100%] text-center h-[7vh] items-start text-black">';
-                echo '<thead>
-                        <tr>
-                        <th class="border-[2px] border-black border-solid w-[15%] ">ID</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">RIB</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">Balance</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">Edit</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">Delete</th>
-                            <th class="border-[2px] border-black border-solid w-[15%] ">Transaction</th>
-                        </tr>
-                    </thead>';
-                while ($row = $result2->fetch_assoc()) {
-
-                    echo "<tr>
-                    <td class='border-[2px] border-black border-solid '>" . $row["accountId"] . " </td>
-                    <td class='border-[2px] border-black border-solid '> " . $row["RIB"] . "</td>
-                    <td class='border-[2px] border-black border-solid '> " . $row["balance"] . "  MAD</td>
+        <div id="searched">
 
 
-                    
-                               
 
-                            <td class='border-[2px] border-black border-solid '>
-                            <form action='addaccounts.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-blue-700 bg-blue-500 hover:text-white text-white '>
-                            <input type='hidden' name='operation' value='" . $row["accountId"] . "'>
-                            <input type='hidden' name='accountid' value='" . $row["accountId"] . "'>
-                            <input type='submit'  name='editing' value='Edit'>
-                        </form>
-                        
-                            </td>
-                            <td class='border-[2px] border-black border-solid '>
-                            <form action='accounts.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-red-700 bg-red-500 hover:text-white text-white '>
-                                <input type='hidden' name='delete' value='" . $row["accountId"] . "'>
-                                <input type='submit'  name='deleteaccount' value='Delete'>
-                            </form>
-                        </td>
 
-                        <td class='border-[2px] border-black border-solid '>
-                    <form action='transactions.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-gray-900 bg-black hover:text-white text-white '>
 
-                        <input type='hidden' name='accountid' value='" . $row["accountId"] . "'>
-                        <input type='submit' name='submit'  value='Show'>
-                        </form>
-                        </td>
-                        </tr>";
-                }
-                echo '</table>';
-            } else {
-                echo "<p class='text-center'>0 results</p>";
-            }
-        }
-        $conn->close();
-        ?>
+</div>
     </section>
 
     <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
         <h2>Copyright © 2030 Hashtag Developer. All Rights Reserved</h2>
     </footer>
-    <script src="navbar.js">
+    <script>
+    function load_data(search = '') {
+        $.ajax({
+            url: 'ajaxaffich/accountaffich.php',
+            type: 'GET',
+            data: { search: search },
+            success: function(response) {
+                $('#searched').html(response);
+            }
+        });
+    }
 
-    </script>
+    $(document).ready(function() {
+        load_data(); // Initial data load
+
+        $('input[name="search"]').on('input', function() {
+            load_data($(this).val());
+        });
+    });
+</script>
 
 </body>
 
