@@ -25,7 +25,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
 
 
             // Fetch data based on the selected bankid for 'agency'
-            $sql = "SELECT * FROM `transaction` WHERE accountid = '$accountid' AND trans_type LIKE '%$searchTerm%'";
+            $sql = "SELECT * FROM `transaction` WHERE accountid = '$accountid' AND trans_type LIKE '%$searchTerm%' ORDER BY transactionId DESC";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -74,7 +74,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
         } else {
             // Handle the case when 'submit' and 'bankid' are not set (initial page load)
             // Fetch data for 'compts' table
-            $sqlall = "SELECT * FROM `transaction` WHERE trans_type LIKE '%$searchTerm%'";
+            $sqlall = "SELECT * FROM `transaction` WHERE trans_type LIKE '%$searchTerm%' ORDER BY transactionId DESC";
             $result2 = $conn->query($sqlall);
 
             if ($result2->num_rows > 0) {
