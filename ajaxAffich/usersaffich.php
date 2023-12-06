@@ -29,7 +29,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                 FROM users
                 INNER JOIN adress ON users.userid = adress.userid
                 INNER JOIN agency ON adress.agencyid = agency.agencyid
-                WHERE agency.agencyid = '$agencyid' AND users.username LIKE '%$searchTerm%'";
+                WHERE agency.agencyid = '$agencyid' AND users.username LIKE '%$searchTerm%' ORDER BY username ASC";
         
 
 
@@ -93,7 +93,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
             } else {
             
             
-                $sqlATM = "SELECT * FROM users WHERE username LIKE '%$searchTerm%'";
+                $sqlATM = "SELECT * FROM users WHERE username LIKE '%$searchTerm%' ORDER BY username ASC";
                 $result2 = $conn->query($sqlATM);
 
                 if ($result2->num_rows > 0) {
