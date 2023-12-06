@@ -1,33 +1,29 @@
+
 <?php
-@include "DataBase.php";
+include "DataBase.php";
 
 
 
-if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
-    $id = $_POST['userId'];
+    if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
+        $id = $_POST['userId'];
 
 
-   
-    
-    $deletetransaction = "DELETE FROM transaction WHERE accountId IN (SELECT accountId FROM account WHERE userId = $id)";
-    $conn->query($deletetransaction);
-    
 
 
-    $deleteaaccount = "DELETE FROM account WHERE userId = $id";
-    $conn->query($deleteaaccount);
-    // Delete associated records in the 'agency' table
-    $deleterole = "DELETE FROM roleofuser WHERE userId = $id";
-    $conn->query($deleterole);
+        $deletetransaction = "DELETE FROM transaction WHERE accountId IN (SELECT accountId FROM account WHERE userId = $id)";
+        $conn->query($deletetransaction);
 
-    $deleteadress = "DELETE FROM adress WHERE userId = $id";
-    $conn->query($deleteadress);
 
-    // Delete the record from the 'bank' table
-    $deleteuser = "DELETE FROM users WHERE userId = $id";
-    $conn->query($deleteuser);
-}
 
+        $deleteaaccount = "DELETE FROM account WHERE userId = $id";
+        $conn->query($deleteaaccount);
+        // Delete associated records in the 'agency' table
+        $deleterole = "DELETE FROM roleofuser WHERE userId = $id";
+        $conn->query($deleterole);
+
+        $deleteadress = "DELETE FROM adress WHERE userId = $id";
+        $conn->query($deleteadress);
+    }
 
 
 ?>
@@ -96,6 +92,7 @@ if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
             <a href="registre.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">Add USERS</a>
 
         </div>
+      
         <?php
         // Check if the 'submit' and 'bankid' are set, indicating that the form is submitted
         if (isset($_POST['users']) && isset($_POST['agencyId'])) {
@@ -176,14 +173,33 @@ if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
                         </tr>";
                 }
                 echo '</table>';
+                
+          
+                
             } else {
                 echo "<p class='text-center'>0 results</p>";
             }
         } else {
-            // Handle the case when 'submit' and 'bankid' are not set (initial page load)
-            // Fetch data for 'compts' table
-            $sqlATM = "SELECT * FROM users";
+
+            $start = 0;
+            $rows_per_page = 2;
+            
+            $record = "SELECT * FROM users ";
+            $result3 = $conn->query($record);
+            $num_rows = mysqli_num_rows($result3);
+            
+            $sqlATM = "SELECT * FROM users"; // Move the definition here
+            
+            $pages = ceil($num_rows / $rows_per_page);
+            
+            if (isset($_GET['page-nr'])) {
+                $page = $_GET['page-nr'] - 1;
+                $start = $page * $rows_per_page;
+            }
+            
+            $sqlATM .= " LIMIT $start, $rows_per_page"; // Append the LIMIT clause here
             $result2 = $conn->query($sqlATM);
+           
 
             if ($result2->num_rows > 0) {
                 echo '<table class="leading-9  w-[100%] text-center h-[7vh] items-start text-black">';
@@ -232,22 +248,165 @@ if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
                             </td>
                         </tr>";
                 }
-                echo '</table>';
+                echo '</table>  ';
+              
+
+                
+                
             } else {
                 echo "<p class='text-center'>0 results</p>";
             }
         }
-        $conn->close();
+       
         ?>
+      
+<div class=" mx-auto justify-center items-center mt-10">
+
+<nav aria-label="Page navigation example">
+    <ul class="inline-flex -space-x-px">
+        <li>
+           
+            <a href="?page-nr=1"
+                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+
+       
+            </li>
+        <li>
+            <?php for($counter = 1; $counter <= $pages ; $counter++)  {?>
+            <a href="?page-nr=<?=$counter;?>"
+                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?= $counter;?></a>
+       <?php  } ?>
+            </li>
+        
+        <li>
+            <a href="?page-nr=<?=$pages ?>"
+                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+        </li>
+    </ul>
+</nav>
+
+
+</div>
+      
     </section>
+    
 
-    <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
-        <h2>Copyright © 2030 Hashtag Developer. All Rights Reserved</h2>
-    </footer>
-    <script src="navbar.js">
+        // Delete the record from the 'bank' table
+        $deleteuser = "DELETE FROM users WHERE userId = $id";
+        $conn->query($deleteuser);
+    }
 
-    </script>
+    $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-</body>
 
-</html>
+    ?>
+
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <!-- Meta tags and stylesheets go here -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <title>Gestionaire Bancaire</title>
+        <style>
+            header {
+                filter: drop-shadow(4px 4px 5px rgba(255, 255, 255));
+                border: 1px white solid;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="min-h-[95vh] w-[100vw] bg-gray-100 bg-cover">
+            <header class="header sticky w-[100%] top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 mb-[10vh]	">
+                <!-- logo -->
+                <a href="" class="flex items-center font-bold	gap-[7px]">
+                    <img src="images/cihlogo.png" alt="" class="md:h-[50px] md:w-[140px] h-[35px] w-[90px]">
+                    ADMIN
+                </a>
+                <!-- navigation -->
+                <nav class="nav font-semibold w-[100%] text-lg">
+                    <ul class="flex items-center w-[100%] justify-center  ">
+
+                        <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
+                            <select name="clients" id="selectOption" class="outline-none rounded">
+                                <option class="font-semibold text-lg" value="Banks">Locations</option>
+
+                                <option class="font-semibold text-lg" value="Banks">Banks</option>
+                                <option class="font-semibold text-lg" value="agency">agency</option>
+                                <option class="font-semibold text-lg" value="ATM">ATM</option>
+                            </select>
+                        </li>
+
+                        <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
+                            <select name="clients" id="selectOptions1" class="outline-none rounded">
+                                <option class="font-semibold text-lg" value="client">Operations</option>
+
+                                <option class="font-semibold text-lg" value="client">Users</option>
+                                <option class="font-semibold text-lg" value="accounts">accounts</option>
+                                <option class="font-semibold text-lg" value="transactions">transactions</option>
+                            </select>
+                        </li>
+                        <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
+                            <a href="index.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">Log Out</a>
+                        </li>
+                    </ul>
+                </nav>
+                <form action="users.php" method="post" class="flex items-center mr-[10px]">
+                    <input type="text" name="search" placeholder="Search UserName..." class="p-2 border border-gray-300 rounded-md" >
+                </form>
+            </header>
+            <script src="navbar.js">
+
+            </script>
+
+            <div class="flex justify-evenly items-center mb-[50px]">
+                <h1 class="text-[50px] h-[10%]  text-center text-black">USERS</h1>
+                <a href="registre.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">Add USERS</a>
+
+            </div>
+            <div id="searched">
+
+
+
+
+
+            </div>
+        </section>
+
+        <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
+            <h2>Copyright © 2030 Hashtag Developer. All Rights Reserved</h2>
+        </footer>
+
+        <script>
+    function load_data(search = '') {
+        $.ajax({
+            url: 'ajaxaffich/usersaffich.php',
+            type: 'GET',
+            data: { search: search },
+            success: function(response) {
+                $('#searched').html(response);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        load_data(); 
+
+        $('input[name="search"]').on('input', function() {
+            load_data($(this).val());
+        });
+    });
+</script>
+
+
+    </body>
+
+    </html>

@@ -18,7 +18,27 @@ if (isset($_POST['Deletes']) && isset($_POST['bankid'])) {
     $conn->query($deleteBank);
 }
 
+// $sql = "SELECT logo, name, bankid FROM bank";
+// $result = $conn->query($sql);
 
+// $data = array();
+
+// if ($result->num_rows > 0) {
+//     while ($row = $result->fetch_assoc()) {
+//         $data[] = array(
+//             "logo" => $row["logo"],
+//             "name" => $row["name"],
+//             "bankid" => $row["bankid"],
+//             "edit" => "<form action='addbank.php' method='post' class='...'><input type='hidden' name='operation' value='" . $row["bankid"] . "'><input type='hidden' name='bankid' value='" . $row["bankid"] . "'><input type='submit' value='Edit'></form>",
+//             "delete" => "<form action='banques.php' method='post' class='...'><input type='hidden' name='bankid' value='" . $row["bankid"] . "'><input type='submit' name='Deletes' value='Delete'></form>",
+//             "agences" => "<form action='agences.php' method='post' class='...'><input type='hidden' name='bankid' value='" . $row["bankid"] . "'><input type='submit' name='submit' value='Agences'></form>",
+//             "atm" => "<form action='ATM.php' method='post' class='...'><input type='hidden' name='bankid' value='" . $row["bankid"] . "'><input type='submit' name='submit' value='ATM'></form>"
+//         );
+//     }
+// }
+
+
+// Return the data as JSON
 ?>
 
 
@@ -41,7 +61,17 @@ if (isset($_POST['Deletes']) && isset($_POST['bankid'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+
     <title>Gestionaire Bancaire</title>
     <style>
         header {
@@ -101,18 +131,18 @@ if (isset($_POST['Deletes']) && isset($_POST['bankid'])) {
 
 
 
-        <table class="leading-9 w-[100%]  text-black text-center">
-            <thead class="text-black">
-                <tr>
-                    <th class="border-[2px] border-black border-solid w-[11%]">Logo</th>
-                    <th class="border-[2px] border-black border-solid w-[12%]">Bank</th>
-                    <th class="border-[2px] border-black border-solid w-[12%]">ID</th>
-                    <th class="border-[2px] border-black border-solid w-[12%]">Edit</th>
-                    <th class="border-[2px] border-black border-solid w-[12%]">Delete</th>
-                    <th class="border-[2px] border-black border-solid w-[12%]">Agences</th>
-                    <th class="border-[2px] border-black border-solid w-[12%]">ATM</th>
-                </tr>
-            </thead>
+        <table id="dataTable" class="leading-9 w-[100%] text-black text-center">
+        <thead class="text-black">
+            <tr>
+                <th class="border-[2px] border-black border-solid w-[11%]">Logo</th>
+                <th class="border-[2px] border-black border-solid w-[12%]">Bank</th>
+                <th class="border-[2px] border-black border-solid w-[12%]">ID</th>
+                <th class="border-[2px] border-black border-solid w-[12%]">Edit</th>
+                <th class="border-[2px] border-black border-solid w-[12%]">Delete</th>
+                <th class="border-[2px] border-black border-solid w-[12%]">Agences</th>
+                <th class="border-[2px] border-black border-solid w-[12%]">ATM</th>
+            </tr>
+        </thead>
             <tbody class = "h-[5vh]">
                 <?php
 
@@ -162,10 +192,9 @@ if (isset($_POST['Deletes']) && isset($_POST['bankid'])) {
                         <input type='submit'  name='submit' value='ATM'>
                     </form>
                 </td>
-                </tr><br>";
+                </tr>";
                     }
                 } else {
-                    // Handle case when there are no rows in the table
                 }
                 $conn->close();
                 ?>
