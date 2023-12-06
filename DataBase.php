@@ -1,14 +1,9 @@
 <?php
 
-$conn = new mysqli('localhost', 'root', "", "bankofmorocco");
 
-// $softDelete = "UPDATE agency set is_deleted = FALSE ;";
-// echo 'THE ADDING IS COMPLETE';
-// try {
-//     $conn->query($softDelete);
-// } catch (\Throwable $th) {
-// echo "the query does not complete";
-// }
+$conn = new mysqli('localhost', 'root', '', 'bankofmorroco');
+
+
 
 ?>
 
