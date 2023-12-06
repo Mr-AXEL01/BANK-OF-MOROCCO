@@ -25,7 +25,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
 
 
             // Fetch data based on the selected bankid for 'agency'
-            $sql = "SELECT * FROM `transaction` WHERE accountid = '$accountid' AND trans_type LIKE '%$searchTerm%'";
+            $sql = "SELECT * FROM `transaction` WHERE accountid = '$accountid' AND trans_type LIKE '%$searchTerm%' ORDER BY transactionId DESC";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -35,6 +35,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
                             <th class="border-[2px] border-black border-solid w-[15%] ">ID</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Operation Type</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Amount</th>
+                            <th class="border-[2px] border-black border-solid w-[15%] ">Created at</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Edit</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Delete</th>
                         </tr>
@@ -45,6 +46,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
                             <td class='border-[2px] border-black border-solid '>" . $row["transactionId"] . " </td>
                             <td class='border-[2px] border-black border-solid '>" . $row["trans_type"] . "  </td>
                             <td class='border-[2px] border-black border-solid '> " . $row["amount"] . " MAD</td>
+                            <td class='border-[2px] border-black border-solid '> " . $row["created_at"] . " </td>
 
                          
                                
@@ -72,7 +74,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
         } else {
             // Handle the case when 'submit' and 'bankid' are not set (initial page load)
             // Fetch data for 'compts' table
-            $sqlall = "SELECT * FROM `transaction` WHERE trans_type LIKE '%$searchTerm%'";
+            $sqlall = "SELECT * FROM `transaction` WHERE trans_type LIKE '%$searchTerm%' ORDER BY transactionId DESC";
             $result2 = $conn->query($sqlall);
 
             if ($result2->num_rows > 0) {
@@ -82,6 +84,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
                         <th class="border-[2px] border-black border-solid w-[15%] ">ID</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Operation Type</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Amount</th>
+                            <th class="border-[2px] border-black border-solid w-[15%] ">Created at</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Edit</th>
                             <th class="border-[2px] border-black border-solid w-[15%] ">Delete</th>
                         </tr>
@@ -92,6 +95,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
                     <td class='border-[2px] border-black border-solid '>" . $row["transactionId"] . " </td>
                     <td class='border-[2px] border-black border-solid '> " . $row["trans_type"] . "</td>
                     <td class='border-[2px] border-black border-solid '> " . $row["amount"] . "  MAD</td>
+                    <td class='border-[2px] border-black border-solid '> " . $row["created_at"] . " </td>
 
 
                  
