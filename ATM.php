@@ -34,107 +34,104 @@ if (isset($_POST['deleteATM']) && isset($_POST['delete'])) {
     </style>
 </head>
 
-<body>
-    <section class="min-h-[95vh] w-[100vw] bg-gray-100 bg-cover">
-    <header class="header sticky w-[100%] top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 mb-[10vh]	">
-            <!-- logo -->
-            <a href="" class = "flex items-center font-bold	gap-[7px]">
-                <img src="images/cihlogo.png" alt="" class="md:h-[50px] md:w-[140px] h-[35px] w-[90px]">
+<body class ="bg-gray-100  bg-cover">
+<header class="header sticky h-[12vh]  top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 	">
+            <a href="" class="flex items-center font-bold text-blue-950	gap-[7px]">
+                <img src="images/CentralLogo.png" alt="" class="md:h-[60px] md:w-[150px] h-[35px] w-[90px]">
                 ADMIN
             </a>
-            <!-- navigation -->
             <nav class="nav font-semibold w-[100%] text-lg">
                 <ul class="flex items-center w-[100%] justify-center  ">
-                  
+
                     <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
-                    <select name="clients" id="selectOption" class="outline-none rounded">
-                    <option class="font-semibold text-lg" value="Banks">Locations</option>
+                        <select name="clients" id="selectOption" class="outline-none rounded">
+                            <option class="font-semibold text-lg" value="Banks">Locations</option>
 
-                        <option class="font-semibold text-lg" value="Banks">Banks</option>
-                        <option class="font-semibold text-lg" value="agency">agency</option>
-                        <option class="font-semibold text-lg" value="ATM">ATM</option>
-                    </select>
-                </li>
-            
-                <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
-                    <select name="clients" id="selectOptions1" class="outline-none rounded">
-                    <option class="font-semibold text-lg" value="client">Operations</option>
-
-                        <option class="font-semibold text-lg" value="client">Users</option>
-                        <option class="font-semibold text-lg" value="accounts">accounts</option>
-                        <option class="font-semibold text-lg" value="transactions">transactions</option>
-                    </select>
+                            <option class="font-semibold text-lg" value="Banks">Banks</option>
+                            <option class="font-semibold text-lg" value="agency">agency</option>
+                            <option class="font-semibold text-lg" value="ATM">ATM</option>
+                        </select>
                     </li>
+
                     <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
-                    <a href="index.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">Log Out</a>
+                        <select name="clients" id="selectOptions1" class="outline-none rounded">
+                            <option class="font-semibold text-lg" value="client">Operations</option>
+
+                            <option class="font-semibold text-lg" value="client">Users</option>
+                            <option class="font-semibold text-lg" value="accounts">accounts</option>
+                            <option class="font-semibold text-lg" value="transactions">transactions</option>
+                        </select>
+                    </li>
+                    <li class="p-4 border-b-2 border-red-500 border-opacity-0 hover:border-opacity-100 hover:text-red-500 duration-200 cursor-pointer">
+                        <a href="index.php" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Log Out</a>
                     </li>
                 </ul>
             </nav>
-            <!-- buttons --->
-         
+
         </header>
 
-
-        <div class="flex justify-evenly items-center mb-[50px]">
-            <h1 class="text-[50px] h-[10%]  text-center text-black">ATM</h1>
-            <a href="addATM.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">Add ATM</a>
+        <div class="flex justify-evenly items-center  h-[20vh] ">
+            <h1 class="text-[50px]    text-black">ATM</h1>
+            <a href="addagency.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">ADD ATM</a>
 
         </div>
+
+
+        <section class="min-h-[75vh]">
+
         <?php
-        // Check if the 'submit' and 'bankid' are set, indicating that the form is submitted
         if (isset($_POST['submit']) && isset($_POST['bankid'])) {
             $bankid = $conn->real_escape_string($_POST['bankid']);
 
-            // Fetch bank details based on the bankid
             $bank_sql = "SELECT * FROM bank WHERE bankid = '$bankid'";
             $bank_result = $conn->query($bank_sql);
 
             if ($bank_result->num_rows > 0) {
                 $bank_row = $bank_result->fetch_assoc();
-                echo "<div class ='flex w-[100%]  justify-center h-[60px] border-[2px] border-black border-solid items-center text-black'>";
-                echo "<img class='border-[2px] border-black  border-solid w-[15%] h-[100%] flex items-center  justify-center' src='{$bank_row['logo']}' > ";
-                echo "<p class='border-[2px] border-white border-solid w-[85%] h-[100%] flex items-center  justify-center'>Bank : {$bank_row["name"]}</p>";
+                echo "<div class ='flex w-[100%]  justify-center h-[60px]  items-center text-black'>";
+                echo "<img class=' w-[15%] h-[100%] flex items-center  justify-center' src='{$bank_row['logo']}' > ";
+                echo "<p class='w-[85%] h-[100%] flex items-center  justify-center'>Bank : {$bank_row["name"]}</p>";
                 echo "</div>";
             }
 
-            // Fetch data based on the selected bankid for 'agency'
             $sql = "SELECT * FROM atm WHERE bankid = '$bankid'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
-                echo '<table class="leading-9 h-[90%] w-[100%] text-center text-black">';
-                echo '<thead>
+                echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
+                echo '<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th class="border-[2px] border-black border-solid w-[20%]">ID</th>
-                            <th class="border-[2px] border-black border-solid w-[20%]">Adress</th>
-                            <th class="border-[2px] border-black border-solid w-[20%]">Bank Id</th>
-                            <th class="border-[2px] border-black border-solid w-[20%]">Edit</th>
-                            <th class="border-[2px] border-black border-solid w-[20%]">Delete</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">ID</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Adress</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Bank Id</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Edit</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Delete</th>
                           
                           
                         </tr>
                     </thead>';
                 while ($row = $result->fetch_assoc()) {
+                    echo ' <tbody class="h-[2vh] ">';
 
-                    echo "<tr>
-                            <td class='border-[2px] border-black border-solid w-[15%]'>" . $row["atmId"] . " </td>
-                            <td class='border-[2px] border-black border-solid w-[15%]'> " . $row["adress"] . "</td>
-                            <td class='border-[2px] border-black border-solid w-[15%]'>" . $row["bankId"] . "</td>
+                    echo "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bclass='px-6 py-4 font-semibold text-center'>
+                            <td class='px-6 py-4 font-semibold text-center'>" . $row["atmId"] . " </td>
+                            <td class='px-6 py-4 font-semibold text-center'> " . $row["adress"] . "</td>
+                            <td class='px-6 py-4 font-semibold text-center'>" . $row["bankId"] . "</td>
                            
-                            <td class='border-[2px] border-black border-solid w-[15%]'>
-                            <form action='addATM.php' method='post'class='height-[100%] cursor-pointer width-[100%] hover:bg-black bg-white hover:text-white text-black'>
+                            <td >
+                            <form action='addATM.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'>
                             <input type='hidden' name='operation' value='" . $row["atmId"] . "'>
                             <input type='hidden' name='atmid' value='" . $row["atmId"] . "'>
-                            <input type='submit'  name='editing' value='Edit'>
+                            <input type='submit'  name='editing' value='Edit' class ='cursor-pointer'>
                         </form>
                         
                             </td>
                        
                           
-                           <td class='border-[2px] border-black border-solid w-[15%]'>
-                                <form action='ATM.php' method='post' class='height-[100%] cursor-pointer width-[100%] hover:bg-black bg-white hover:text-white text-black'>
+                           <td >
+                                <form action='ATM.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>
                                     <input type='hidden' name='delete' value='" . $row["atmId"] . "'>
-                                    <input type='submit'  name='deleteATM' value='Delete'>
+                                    <input type='submit'  name='deleteATM' value='Delete' class ='cursor-pointer'>
                                 </form>
                             </td>
                         </tr>";
@@ -144,44 +141,44 @@ if (isset($_POST['deleteATM']) && isset($_POST['delete'])) {
                 echo "<p class='text-center'>0 results</p>";
             }
         } else {
-            // Handle the case when 'submit' and 'bankid' are not set (initial page load)
-            // Fetch data for 'compts' table
+           
             $sqlATM = "SELECT * FROM atm";
             $result2 = $conn->query($sqlATM);
 
             if ($result2->num_rows > 0) {
-                echo '<table class="leading-9  w-[100%] text-center h-[7vh] items-start text-black">';
-                echo '<thead>
+                echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
+                echo '<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                <th class="border-[2px] border-black border-solid w-[15%]">ID</th>
-                <th class="border-[2px] border-black border-solid w-[15%]">Adress</th>
-                <th class="border-[2px] border-black border-solid w-[15%]">Bank Id</th>
-                <th class="border-[2px] border-black border-solid w-[15%]">Edit</th>
-                <th class="border-[2px] border-black border-solid w-[15%]">Delete</th>
+                <th class=" w-[11%] px-6 py-3 text-center" scope="col"">ID</th>
+                <th class=" w-[11%] px-6 py-3 text-center" scope="col"">Adress</th>
+                <th class=" w-[11%] px-6 py-3 text-center" scope="col"">Bank Id</th>
+                <th class=" w-[11%] px-6 py-3 text-center" scope="col"">Edit</th>
+                <th class=" w-[11%] px-6 py-3 text-center" scope="col"">Delete</th>
       
             </tr>
                     </thead>';
                 while ($row = $result2->fetch_assoc()) {
 
-                    echo "<tr>
-                    <td class='border-[2px] border-black border-solid w-[15%]'>" . $row["atmId"] . " </td>
-                    <td class='border-[2px] border-black border-solid w-[15%]'> " . $row["adress"] . "</td>
-                    <td class='border-[2px] border-black border-solid w-[15%]'>" . $row["bankId"] . "</td>
+                    echo ' <tbody class="h-[2vh] ">';
 
+                    echo "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bclass='px-6 py-4 font-semibold text-center'></td>
+                            <td class='px-6 py-4 font-semibold text-center'>" . $row["atmId"] . " </td>
+                            <td class='px-6 py-4 font-semibold text-center'> " . $row["adress"] . "</td>
+                            <td class='px-6 py-4 font-semibold text-center'>" . $row["bankId"] . "</td>
 
                             
-                            <td class='border-[2px] border-black border-solid w-[15%]'>
-                            <form action='addATM.php' method='post' class = 'h-[5vh]  cursor-pointer width-[150px] hover:bg-blue-700 bg-blue-500 hover:text-white text-black>
+                            <td >
+                            <form action='addATM.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'>
                             <input type='hidden' name='operation' value='" . $row["atmId"] . "'>
                             <input type='hidden' name='atmid' value='" . $row["atmId"] . "'>
-                            <input type='submit'  name='editing' value='Edit'>
+                            <input type='submit'  name='editing' value='Edit' class ='cursor-pointer'>
                         </form>
                         
                             </td>
-                            <td class='border-[2px] border-black border-solid w-[15%]'>
-                            <form action='ATM.php' method='post' class = 'h-[5vh]  cursor-pointer width-[150px] hover:bg-red-700 bg-red-500 hover:text-white text-black>
+                            <td >
+                            <form action='ATM.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>
                                 <input type='hidden' name='delete' value='" . $row["atmId"] . "'>
-                                <input type='submit'  name='deleteATM' value='Delete'>
+                                <input type='submit'  name='deleteATM' value='Delete' class ='cursor-pointer'>
                             </form>
                         </td>
                         </tr>";

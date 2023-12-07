@@ -18,9 +18,9 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
                 if ($agency_result->num_rows > 0) {
                     $agency_row = $agency_result->fetch_assoc();
-                    echo "<div class ='flex w-[100%]  justify-center h-[60px] border-[2px] border-white border-solid items-center text-black'>";
+                    echo "<div class ='flex w-[100%]  justify-center h-[60px]  items-center text-black'>";
 
-                    echo "<p class='border-[2px] border-white border-solid w-[50%] h-[100%] flex items-center  justify-center'>Agence : {$agency_row["agencyname"]}</p>";
+                    echo "<p class=' w-[50%] h-[100%] flex items-center  justify-center'>Agence : {$agency_row["agencyname"]}</p>";
                     echo "</div>";
                 }
 
@@ -38,50 +38,49 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
-                    echo '<table  class="leading-9 h-[90%] w-[100%] text-center text-black">';
-                    echo '<thead>
-                            <tr>
-                                <th class="border-[2px] border-black border-solid w-[15%]">User Name</th>
-                                <th class="border-[2px] border-black border-solid w-[15%]">First Name</th>
-                                <th class="border-[2px] border-black border-solid w-[15%]">Family Name</th>
+                    echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
+                    echo '<thead class="text-xs text-gray-700 upperclass=" w-[11%] px-6 py-3 text-center" scope="col"                    <tr>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">User Name</th>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">First Name</th>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">Family Name</th>
                             
-                                <th class="border-[2px] border-black border-solid w-[15%]">Editing</th>
-                                <th class="border-[2px] border-black border-solid w-[15%]">Deleting</th>
-                                <th class="border-[2px] border-black border-solid w-[15%]">Accounts</th>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">Editing</th>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">Deleting</th>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">Accounts</th>
                             </tr>
                         </thead>';
                     while ($row = $result->fetch_assoc()) {
 
                         echo "<tr> 
-                                <td class='border-[2px] border-black border-solid w-[15%]'>" . $row["username"] . " </td>
-                                <td class='border-[2px] border-black border-solid w-[15%]'> " . $row["firstName"] . "</td>
-                                <td class='border-[2px] border-black border-solid w-[15%]'>" . $row["familyName"] . "</td>
+                                <td class='px-6 py-4 font-semibold text-center'>" . $row["username"] . " </td>
+                                <td class='px-6 py-4 font-semibold text-center'> " . $row["firstName"] . "</td>
+                                <td class='px-6 py-4 font-semibold text-center'>" . $row["familyName"] . "</td>
                             
                                 
                         
                         
                             
-                            <td class='border-[2px] border-black border-solid '>
-                                <form action='registre.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-blue-700 bg-blue-500 hover:text-white text-white '>
+                            <td >
+                                <form action='registre.php' method='post'  class=' cursor-pointer text-center focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'>
                                 <input type='hidden' name='operation' value='" . $row["userid"] . "'>
                                 <input type='hidden' name='userid' value='" . $row["userid"] . "'>
-                                <input type='submit'  name='editing' value='Edit'>
+                                <input type='submit'  name='editing' value='Edit' class=' cursor-pointer'>
                             </form>
                             
         
                             
                                 </td>
-                            <td class='border-[2px] border-black border-solid '>
-                            <form action='users.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-red-700 bg-red-500 hover:text-white text-white '>
+                            <td >
+                            <form action='users.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>
                             <input type='hidden' name='userid' value='" . $row["userid"] . "'>
-                            <input type='submit'  name='deleteuser' value='Delete'>
+                            <input type='submit'  name='deleteuser' value='Delete' class=' cursor-pointer'>
                         </form>
                         
                                 </td>
-                                <td class='border-[2px] border-black border-solid '>
-                                <form action='agences.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-gray-900 bg-black hover:text-white text-white '>
+                                <td >
+                                <form action='agences.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
                                     <input type='hidden' name='userid' value='" . $row["userid"] . "'>
-                                    <input type='submit'  name='submit' value='Show'>
+                                    <input type='submit'  name='submit' value='Show' class=' cursor-pointer'>
                                 </form>
                             </td> 
                             </tr>";
@@ -97,51 +96,50 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                 $result2 = $conn->query($sqlATM);
 
                 if ($result2->num_rows > 0) {
-                    echo '
-                    <table class="leading-9  w-[100%] text-center h-[7vh] items-start text-black" >';
-                    echo '<thead>
-                    <tr>
-                    <th class="border-[2px] border-black border-solid w-[15%]">User Name</th>
-                    <th class="border-[2px] border-black border-solid w-[15%]">First Name</th>
-                    <th class="border-[2px] border-black border-solid w-[15%]">Family Name</th>
-                
-                    <th class="border-[2px] border-black border-solid w-[15%]">Editing</th>
-                    <th class="border-[2px] border-black border-solid w-[15%]">Deleting</th>
-                    <th class="border-[2px] border-black border-solid w-[15%]">Accounts</th>
-                </tr>
+                    echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
+                    echo '<thead class="text-xs text-gray-700 upperclass=" w-[11%] px-6 py-3 text-center" scope="col"                    <tr>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">User Name</th>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">First Name</th>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">Family Name</th>
+                            
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">Editing</th>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">Deleting</th>
+                                <th class=" w-[11%] px-6 py-3 text-center" scope="col">Accounts</th>
+                            </tr>
                         </thead>';
                     while ($row = $result2->fetch_assoc()) {
+                        echo ' <tbody class="h-[2vh] ">';
 
                         echo "<tr>
-                        <td class='border-[2px] border-black border-solid '>" . $row["username"] . " </td>
-                        <td class='border-[2px] border-black border-solid '> " . $row["firstName"] . "</td>
-                        <td class='border-[2px] border-black border-solid '>" . $row["familyName"] . "</td>
+                        <td class='px-6 py-4 font-semibold text-center'>" . $row["username"] . " </td>
+                        <td class='px-6 py-4 font-semibold text-center'> " . $row["firstName"] . "</td>
+                        <td class='px-6 py-4 font-semibold text-center'>" . $row["familyName"] . "</td>
 
 
                         
-                                <td class='border-[2px] border-black border-solid '>
-                                <form action='registre.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-blue-700 bg-blue-500 hover:text-white text-white '>
+                             <td >
+                                <form action='registre.php' method='post'  class=' cursor-pointer text-center focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'>
                                 <input type='hidden' name='operation' value='" . $row["userId"] . "'>
                                 <input type='hidden' name='userid' value='" . $row["userId"] . "'>
-                                <input type='submit'  name='editing' value='Edit'>
-                            </form>
-
-                                </td>
-                                <td class='border-[2px] border-black border-solid '>
-                                <form action='users.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-red-700 bg-red-500 hover:text-white text-white '>
-                                <input type='hidden' name='userId' value='" . $row["userId"] . "'>
-                                <input type='submit'  name='deleteuser' value='Delete'>
+                                <input type='submit'  name='editing' value='Edit' class=' cursor-pointer'>
                             </form>
                             
-                            </td>
-                            <td class='border-[2px] border-black border-solid '>
-                            <form action='ajaxAffich/accountaffich.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-gray-900 bg-black hover:text-white text-white '>
-
-                                <input type='hidden' name='userid' value='" . $row["userId"] . "'>
-                                <input type='submit' name='submit'  value='Show'>
-                                </form>
-
+        
+                            
                                 </td>
+                                <td >
+                                <form action='users.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>
+                                <input type='hidden' name='userid' value='" . $row["userId"] . "'>
+                                <input type='submit'  name='deleteuser' value='Delete' class=' cursor-pointer'>
+                            </form>
+                            
+                                    </td>
+                            <td >
+                            <form action='agences.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
+                                <input type='hidden' name='userid' value='" . $row["userId"] . "'>
+                                <input type='submit'  name='submit' value='Show' class=' cursor-pointer'>
+                            </form>
+                        </td> 
                             </tr>";
                     }
                     echo '</table>

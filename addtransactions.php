@@ -2,15 +2,15 @@
 
 
 @include 'database.php';
-// if (isset($_POST["accountid"])) {
-//     $id = $_POST["accountid"];
-//     $bnkinfo = "SELECT * FROM account where accountid = $id";
-//     $stk_bnk_info = $conn->query("$bnkinfo");
-//     $rows = mysqli_fetch_assoc($stk_bnk_info);
-//     $agencyname = $rows["RIB"];
-//     $longtitud = $rows["balance"];
+if (isset($_POST["accountid"])) {
+    $id = $_POST["accountid"];
+    $bnkinfo = "SELECT * FROM account where accountid = $id";
+    $stk_bnk_info = $conn->query("$bnkinfo");
+    $rows = mysqli_fetch_assoc($stk_bnk_info);
+    $agencyname = $rows["RIB"];
+    $longtitud = $rows["balance"];
 
-// }
+}
 
 
 if (isset($_POST['submit'])) {
@@ -154,7 +154,7 @@ if ($type == "credit") {
                 if (isset($_POST['transactionid'])) {
                     echo '<input type="submit" name="edited" value="Edit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-[85%] rounded cursor-pointer">';
                 } else {
-                    echo '<input type="submit" name="submit" value="Add Account" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-[85%] rounded cursor-pointer">';
+                    echo '<input type="submit" name="submit" value="Add Transaction" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-[85%] rounded cursor-pointer">';
                 };
                 ?>
 

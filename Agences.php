@@ -50,52 +50,54 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
     </style>
 </head>
 
-<body>
-    <section class="min-h-[95vh] w-[100vw] bg-gray-100 bg-cover">
-    <header class="header sticky w-[100%] top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 mb-[10vh]	">
+<body class ="bg-gray-100  bg-cover">
+<header class="header sticky h-[12vh]  top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 	">
             <!-- logo -->
-            <a href="" class = "flex items-center font-bold	gap-[7px]">
-                <img src="images/cihlogo.png" alt="" class="md:h-[50px] md:w-[140px] h-[35px] w-[90px]">
+            <a href="" class="flex items-center font-bold text-blue-950	gap-[7px]">
+                <img src="images/CentralLogo.png" alt="" class="md:h-[60px] md:w-[150px] h-[35px] w-[90px]">
                 ADMIN
             </a>
             <!-- navigation -->
             <nav class="nav font-semibold w-[100%] text-lg">
                 <ul class="flex items-center w-[100%] justify-center  ">
-                  
+
                     <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
-                    <select name="clients" id="selectOption" class="outline-none rounded">
-                    <option class="font-semibold text-lg" value="Banks">Locations</option>
+                        <select name="clients" id="selectOption" class="outline-none rounded">
+                            <option class="font-semibold text-lg" value="Banks">Locations</option>
 
-                        <option class="font-semibold text-lg" value="Banks">Banks</option>
-                        <option class="font-semibold text-lg" value="agency">agency</option>
-                        <option class="font-semibold text-lg" value="ATM">ATM</option>
-                    </select>
-                </li>
-            
-                <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
-                    <select name="clients" id="selectOptions1" class="outline-none rounded">
-                    <option class="font-semibold text-lg" value="client">Operations</option>
-
-                        <option class="font-semibold text-lg" value="client">Users</option>
-                        <option class="font-semibold text-lg" value="accounts">accounts</option>
-                        <option class="font-semibold text-lg" value="transactions">transactions</option>
-                    </select>
+                            <option class="font-semibold text-lg" value="Banks">Banks</option>
+                            <option class="font-semibold text-lg" value="agency">agency</option>
+                            <option class="font-semibold text-lg" value="ATM">ATM</option>
+                        </select>
                     </li>
+
                     <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
-                    <a href="index.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">Log Out</a>
+                        <select name="clients" id="selectOptions1" class="outline-none rounded">
+                            <option class="font-semibold text-lg" value="client">Operations</option>
+
+                            <option class="font-semibold text-lg" value="client">Users</option>
+                            <option class="font-semibold text-lg" value="accounts">accounts</option>
+                            <option class="font-semibold text-lg" value="transactions">transactions</option>
+                        </select>
+                    </li>
+                    <li class="p-4 border-b-2 border-red-500 border-opacity-0 hover:border-opacity-100 hover:text-red-500 duration-200 cursor-pointer">
+                        <a href="index.php" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Log Out</a>
                     </li>
                 </ul>
             </nav>
-            <!-- buttons --->
-         
+
         </header>
 
+        <script src="navbar.js">
 
-        <div class="flex justify-evenly items-center mb-[50px]">
-            <h1 class="text-[50px] h-[10%]  text-center text-black">AGENCIES</h1>
+</script>
+        <div class="flex justify-evenly items-center  h-[20vh] ">
+            <h1 class="text-[50px]    text-black">AGENCIES</h1>
             <a href="addagency.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">ADD AGENCIES</a>
 
         </div>
+        <section class="min-h-[75vh]">
+
         <?php
         // Check if the 'submit' and 'bankid' are set, indicating that the form is submitted
         if (isset($_POST['submit']) && isset($_POST['bankid'])) {
@@ -107,9 +109,9 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
 
             if ($bank_result->num_rows > 0) {
                 $bank_row = $bank_result->fetch_assoc();
-                echo "<div class ='flex w-[100%]  justify-center h-[60px] border-[2px] border-black border-solid items-center text-black'>";
-                echo "<img class='border-[2px] border-black border-solid w-[15%] h-[100%] flex items-center  justify-center' src='{$bank_row['logo']}' > ";
-                echo "<p class='border-[2px] border-black border-solid w-[85%] h-[100%] flex items-center  justify-center'>Bank : {$bank_row["name"]}</p>";
+                echo "<div class ='flex w-[100%]  justify-center h-[60px]  items-center text-black'>";
+                echo "<img class=' w-[15%] h-[100%] flex items-center  justify-center' src='{$bank_row['logo']}' > ";
+                echo "<p class=' w-[85%] h-[100%] flex items-center  justify-center'>Bank : {$bank_row["name"]}</p>";
                 echo "</div>";
             }
 
@@ -118,51 +120,59 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
-                echo '<table class="leading-9 h-[90%]  w-[100%] text-center text-black">';
-                echo '<thead>
+                echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
+                echo '<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th class="border-[2px] border-black border-solid w-[12%] ">ID</th>
-                            <th class="border-[2px] border-black border-solid w-[12%] ">Longtitude</th>
-                            <th class="border-[2px] border-black border-solid w-[12%] ">Latitude</th>
-                            <th class="border-[2px] border-black border-solid w-[12%] ">Agency Name</th>
-                            <th class="border-[2px] border-black border-solid w-[12%] ">Bank ID</th>
-                            <th class="border-[2px] border-black border-solid w-[12%] ">Edit</th>
-                            <th class="border-[2px] border-black border-solid w-[12%] ">Delete</th>
-                            <th class="border-[2px] border-black border-solid w-[12%] ">Users</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">ID</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col" ">Longtitude</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col" ">Latitude</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col" ">Agency Name</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col" ">Bank ID</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col" ">Edit</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col" ">Delete</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col" ">Users</th>
                         </tr>
                     </thead>';
                 while ($row = $result->fetch_assoc()) {
                     
                         
                    
-                    echo '<form action="transaction.php" method="post" class="h-[10vh] items-start">';
-                    echo "<tr>
-                            <td class='border-[2px] border-black border-solid '>" . $row["agencyId"] . " </td>
-                            <td class='border-[2px] border-black border-solid '> " . $row["longitude"] . "</td>
-                            <td class='border-[2px] border-black border-solid '> " . $row["latitude"] . " </td>
-                            <td class='border-[2px] border-black border-solid '>" . $row["agencyname"] . "</td>
-                            <td class='border-[2px] border-black border-solid '>" . $row["bankId"] . "</td>
 
-                            <td class='border-[2px] border-black border-solid h-[4vh]  cursor-pointer width-[150px] hover:bg-blue-700 bg-blue-500 rounded-[5px] hover:text-white text-black'>
-                            <form action='addagency.php' method='post' class = ''>
+                    echo ' <tbody class="h-[2vh] ">';
+                    echo "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bclass='px-6 py-4 font-semibold text-center'>" . $row["agencyId"] . " </td>
+                            <td class='px-6 py-4 font-semibold text-center'> " . $row["longitude"] . "</td>
+                            <td class='px-6 py-4 font-semibold text-center'> " . $row["latitude"] . " </td>
+                            <td class='px-6 py-4 font-semibold text-center'>" . $row["agencyname"] . "</td>
+                            <td class='px-6 py-4 font-semibold text-center'>" . $row["bankId"] . "</td>
+
+
+    
+                            <td >
+                            <form action='addagency.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'>
                             <input type='hidden'  name='operation' value='" . $row["agencyId"] . "'>
                             <input type='hidden' name='agencyid' value='" . $row["agencyId"] . "'>
-                            <input type='submit'   name='editing' value='Edit'>
+                            <input type='submit'   name='editing' value='Edit' class='cursor-pointer'>
                         </form>
                         
                             </td>
-                       
-                         
-                           <td class='border-[2px] border-black border-solid '>
-                                <form action='agences.php' method='post'  class = 'h-[5vh]  cursor-pointer width-[150px] hover:bg-red-700 bg-red-500 rounded-[4px] hover:text-white text-black'>
+
+                            <td >
+                                <form action='agences.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>
                                     <input type='hidden' name='delete' value='" . $row["agencyId"] . "'>
-                                    <input type='submit'  name='deleteagency' value='Delete'>
+                                    <input type='submit'  name='deleteagency' value='Delete' class='cursor-pointer'>
                                 </form>
                             </td>
-                            <td class='border-[2px] border-black border-solid '>
-                            <form action='users.php' method='post'  class = 'h-[5vh]  cursor-pointer width-[150px] hover:bg-gray-900 bg-black hover:text-white text-white'>
+
+
+
+                        
+                       
+                         
+                         
+                            <td >
+                            <form action='users.php' method='post'  class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
                                 <input type='hidden' name='agencyId' value='" . $row["agencyId"] . "'>
-                                <input type='submit'  name='users' value='Show'>
+                                <input type='submit'  name='users' value='Show' class='cursor-pointer'>
                             </form>
                         </td>
                         </tr>";
@@ -179,52 +189,52 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
             $result2 = $conn->query($sqlall);
 
             if ($result2->num_rows > 0) {
-                echo '<table class="leading-9  w-[100%] text-center h-[7vh] items-start text-black">';
-                echo '<thead>
+                echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
+                echo '<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th class="border-[2px] border-black border-solid w-[12%]">ID</th>
-                            <th class="border-[2px] border-black border-solid w-[12%]">Longitude</th>
-                            <th class="border-[2px] border-black border-solid w-[12%]">Latitude</th>
-                            <th class="border-[2px] border-black border-solid w-[12%]">Agency Name</th>
-                            <th class="border-[2px] border-black border-solid w-[12%]">Bank ID</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">ID</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Longitude</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Latitude</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Agency Name</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Bank ID</th>
                           
-                            <th class="border-[2px] border-black border-solid w-[12%]">Edit</th>
-                            <th class="border-[2px] border-black border-solid w-[12%]">Delete</th>
-                            <th class="border-[2px] border-black border-solid w-[12%]">Users</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Edit</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Delete</th>
+                            <th class=" w-[11%] px-6 py-3 text-center" scope="col">Users</th>
                         </tr>
                     </thead>';
                 while ($row = $result2->fetch_assoc()) {
 
                     echo "<tr>
-                            <td class='border-[2px] border-black border-solid '>" . $row["agencyId"] . " </td>
-                            <td class='border-[2px] border-black border-solid '> " . $row["longitude"] . "</td>
-                            <td class='border-[2px] border-black border-solid '> " . $row["latitude"] . " </td>
-                            <td class='border-[2px] border-black border-solid '>" . $row["agencyname"] . "</td>
-                            <td class='border-[2px] border-black border-solid '>" . $row["bankId"] . "</td>
+                            <td class='px-6 py-4 font-semibold text-center'>" . $row["agencyId"] . " </td>
+                            <td class='px-6 py-4 font-semibold text-center'> " . $row["longitude"] . "</td>
+                            <td class='px-6 py-4 font-semibold text-center'> " . $row["latitude"] . " </td>
+                            <td class='px-6 py-4 font-semibold text-center'>" . $row["agencyname"] . "</td>
+                            <td class='px-6 py-4 font-semibold text-center'>" . $row["bankId"] . "</td>
 
 
                       
-                            <td class='border-[2px] border-black border-solid '>
-                            <form action='addagency.php' method='post' class = 'h-[5vh]  cursor-pointer width-[150px] hover:bg-blue-700 bg-blue-500 rounded-[4px] hover:text-white text-black'>
-                            <input type='hidden' name='operation' value='" . $row["agencyId"] . "'>
+                            <td >
+                            <form action='addagency.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'>
+                            <input type='hidden'  name='operation' value='" . $row["agencyId"] . "'>
                             <input type='hidden' name='agencyid' value='" . $row["agencyId"] . "'>
-                            <input type='submit'  name='editing' value='Edit'>
+                            <input type='submit'   name='editing' value='Edit' class='cursor-pointer'>
                         </form>
                         
                             </td>
-                            <td class='border-[2px] border-black border-solid '>
-                            <form action='agences.php' method='post' class='height-[100%] cursor-pointer width-[100%] hover:bg-red-700 bg-red-500 hover:text-white text-black'>
+                            
+                            <td >
+                            <form action='agences.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>
                                 <input type='hidden' name='delete' value='" . $row["agencyId"] . "'>
-                                <input type='submit'  name='deleteagency' value='Delete'>
+                                <input type='submit'  name='deleteagency' value='Delete' class='cursor-pointer'>
                             </form>
                         </td>
-                        <td class='border-[2px] border-black border-solid '>
-                        <form action='users.php' method='post' class='height-[80px] cursor-pointer w-[100%] hover:bg-gray-900 bg-black hover:text-white text-white '>
-
+                        <td >
+                        <form action='users.php' method='post'  class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
                             <input type='hidden' name='agencyId' value='" . $row["agencyId"] . "'>
-                            <input type='submit' name='users'  value='Show'>
-                            </form>
-                            </td>
+                            <input type='submit'  name='users' value='Show' class='cursor-pointer'>
+                        </form>
+                    </td>
                         
                         </tr>";
                 }
@@ -236,19 +246,16 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
         }
         $conn->close();
         ?>
-        <form method="post">
+
+        <form method="post" class="w-[100%] flex justify-center items-center h-[15vh] ">
             <input value="RESET" type="submit" name="reset"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></input >
-            <input value="DELETE ALL" type="submit" name="delete_all"  class="bg-orange-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"></input >
         </form>
     </section>
 
     <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
         <h2>Copyright © 2030 Hashtag Developer. All Rights Reserved</h2>
     </footer>
-    <script src="navbar.js">
-
-        
-    </script>
+    
 
 </body>
 
