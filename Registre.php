@@ -16,7 +16,16 @@
                 $error[] = 'Password and confirmation password do not match!';
             } else {
                 $pass = password_hash($password, PASSWORD_DEFAULT);
-        
+
+                $insertUser = "INSERT INTO users (firstName, familyName, username, pw) VALUES (?, ?, ?, ?)";
+                 $stmtUser = mysqli_prepare($conn, $insertUser);
+                 mysqli_stmt_bind_param($stmtUser, "ssss", $fname, $lname, $username, $pass);
+                 mysqli_stmt_execute($stmtUser);
+
+                // Get the inserted user's ID
+                $userId = mysqli_insert_id($conn);
+
+                
                 // Check if the role exists
                 $roleSelect = "SELECT rolename FROM roles WHERE rolename = ?";
                 $stmtRole = mysqli_prepare($conn, $roleSelect);
