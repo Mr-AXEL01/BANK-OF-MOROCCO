@@ -40,13 +40,17 @@
                         $stmtRoleOfUser = mysqli_prepare($conn, $insertRoleOfUser);
                         mysqli_stmt_bind_param($stmtRoleOfUser, "is", $userId, $selectedRole);
                         mysqli_stmt_execute($stmtRoleOfUser);
-    
+
+                        
                     } else {
                         // Invalid user type
                         $error[] = 'Invalid user type: ' . $selectedRole;
                     }
 
                 }
+
+                header("Location:adress.php");
+                exit;
             }
         }
         
@@ -165,10 +169,14 @@
                         <input type="password" name="password" required placeholder="Enter Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none      h-[3rem] w-[85%] p-[5px] rounded">
                         <input type="password" name="cpassword" required placeholder="confirme Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none     h-[3rem] w-[85%] p-[5px] rounded">
                         <div class="w-[85%]">
-                            <select name="user-type[]"  id="" class="outline-none h-[40px] p-[5px] w-[50%] rounded" multiple>
-                                <option value="client">client</option>
-                                <option value="admin">Admin</option>
-                            </select>
+                        <label>
+                            <input type="checkbox" name="user-type[]" value="client" class="mr-2">
+                            Client
+                        </label>
+                        <label>
+                            <input type="checkbox" name="user-type[]" value="admin" class="mr-2">
+                            Admin
+                        </label>
                         </div>
             <!-- Other input fields -->
 
