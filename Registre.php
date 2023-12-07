@@ -25,42 +25,27 @@
                 // Get the inserted user's ID
                 $userId = mysqli_insert_id($conn);
 
-                
-                // Check if the role exists
+                // Associate user with selected roles in roleofuser table
+                $selectedRoles = isset($_POST['user-type']) ? $_POST['user-type'] : array();
+                foreach ($selectedRoles as $selectedRole) {
                 $roleSelect = "SELECT rolename FROM roles WHERE rolename = ?";
                 $stmtRole = mysqli_prepare($conn, $roleSelect);
-                mysqli_stmt_bind_param($stmtRole, "s", $_POST['user-type']);
+                mysqli_stmt_bind_param($stmtRole, "s", $selectedRole);
                 mysqli_stmt_execute($stmtRole);
                 mysqli_stmt_store_result($stmtRole);
         
                 if (mysqli_stmt_num_rows($stmtRole) > 0) {
                     // Role exists, proceed with user insertion
-                    $insert = "INSERT INTO users (firstName, familyName, username, pw)
-                            VALUES (?, ?, ?, ?)";
-                    $stmtUser = mysqli_prepare($conn, $insert);
-                    mysqli_stmt_bind_param($stmtUser, "ssss", $fname, $lname, $username, $pass);
-                    mysqli_stmt_execute($stmtUser);
-        
-                    // Get the inserted user's ID
-                    $userId = mysqli_insert_id($conn);
-        
-                    // Insert role of the user into the roleofuser table
-                    $roleOfUserInsert = "INSERT INTO roleofuser (userId, rolename)
-                                        VALUES (?, ?)";
-                    $stmtRoleOfUser = mysqli_prepare($conn, $roleOfUserInsert);
-                    mysqli_stmt_bind_param($stmtRoleOfUser, "is", $userId, $_POST['user-type']);
+                    $insertRoleOfUser = "INSERT INTO roleofuser (userId, rolename) VALUES (?, ?)";
+                    $stmtRoleOfUser = mysqli_prepare($conn, $insertRoleOfUser);
+                    mysqli_stmt_bind_param($stmtRoleOfUser, "is", $userId, $selectedRole);
                     mysqli_stmt_execute($stmtRoleOfUser);
-        
-                    // Close the database connection
-                    mysqli_close($conn);
-        
-                    // Redirect after successful registration
-                    header('location: adress.php');
-                    exit; // Exit to ensure the script doesn't continue executing
+
                 } else {
                     // Invalid user type
-                    $error[] = 'Invalid user type!';
+                    $error[] = 'Invalid user type: ' . $selectedRole;
                 }
+
             }
         }
         
