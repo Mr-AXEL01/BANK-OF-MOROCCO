@@ -147,7 +147,7 @@
                         </p>
                     </div>
 
-                    <form action="Registre.php" method="post" class="flex flex-col gap-[19px] h-[70%] md:h-[80%] w-[80%] md:w-[30%] mb-[15px] p-[10px] bg-gray-300/20 items-center justify-center rounded-[20px]">
+                    <form action="adress.php" method="post" class="flex flex-col gap-[19px] h-[70%] md:h-[80%] w-[80%] md:w-[30%] mb-[15px] p-[10px] bg-gray-300/20 items-center justify-center rounded-[20px]">
                         <h3 class="text-3xl mb-2.5 uppercase font-medium text-gray-900">ADD USER</h3>
         <?php
         if (!empty($error)) {
@@ -165,10 +165,14 @@
                         <input type="password" name="password" required placeholder="Enter Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none      h-[3rem] w-[85%] p-[5px] rounded">
                         <input type="password" name="cpassword" required placeholder="confirme Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none     h-[3rem] w-[85%] p-[5px] rounded">
                         <div class="w-[85%]">
-                            <select name="user-type[]"  id="" class="outline-none h-[40px] p-[5px] w-[50%] rounded" multiple>
-                                <option value="client">client</option>
-                                <option value="admin">Admin</option>
-                            </select>
+                        <label>
+                            <input type="checkbox" name="user-type[]" value="client" class="mr-2">
+                            Client
+                        </label>
+                        <label>
+                            <input type="checkbox" name="user-type[]" value="admin" class="mr-2">
+                            Admin
+                        </label>
                         </div>
             <!-- Other input fields -->
 
