@@ -25,18 +25,20 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
 
 
             // Fetch data based on the selected bankid for 'agency'
-            $sql = "SELECT * FROM `transaction` WHERE accountid = '$accountid' AND trans_type LIKE '%$searchTerm%'";
+            $sql = "SELECT * FROM `transaction` WHERE accountid = '$accountid' AND trans_type LIKE '%$searchTerm%' ORDER BY transactionId DESC";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
                 echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
                     echo '<thead class="text-xs text-gray-700 upperclass=" w-[11%] px-6 py-3 text-center" scope="col" 
                         <tr>
+
                             <th class="w-[11%] px-6 py-3 text-center" scope="col">ID</th>
                             <th class="w-[11%] px-6 py-3 text-center" scope="col">Operation Type</th>
                             <th class="w-[11%] px-6 py-3 text-center" scope="col">Amount</th>
                             <th class="w-[11%] px-6 py-3 text-center" scope="col">Edit</th>
                             <th class="w-[11%] px-6 py-3 text-center" scope="col">Delete</th>
+
                         </tr>
                     </thead>';
                 while ($row = $result->fetch_assoc()) {
@@ -44,6 +46,7 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
                             <td class='px-6 py-4 font-semibold text-center'>" . $row["transactionId"] . " </td>
                             <td class='px-6 py-4 font-semibold text-center'>" . $row["trans_type"] . "  </td>
                             <td class='px-6 py-4 font-semibold text-center'> " . $row["amount"] . " MAD</td>
+
 
                          
                                
@@ -71,10 +74,11 @@ if (isset($_POST['submit']) && isset($_POST['accountid'])) {
         } else {
             // Handle the case when 'submit' and 'bankid' are not set (initial page load)
             // Fetch data for 'compts' table
-            $sqlall = "SELECT * FROM `transaction` WHERE trans_type LIKE '%$searchTerm%'";
+            $sqlall = "SELECT * FROM `transaction` WHERE trans_type LIKE '%$searchTerm%' ORDER BY transactionId DESC";
             $result2 = $conn->query($sqlall);
 
             if ($result2->num_rows > 0) {
+              
                 echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
                 echo '<thead class="text-xs text-gray-700 upperclass=" w-[11%] px-6 py-3 text-center" scope="col" 
                     <tr>

@@ -39,7 +39,7 @@ if (isset($_POST['transactionid']) && $_POST['editing'] === 'Edit') {
     $rows = mysqli_fetch_assoc($stk_trns_info);
 
     // Populate variables with retrieved data
-    $type = $rows["type"];
+    $type = $rows["trans_type"];
     $amount = $rows["amount"];
 }
 

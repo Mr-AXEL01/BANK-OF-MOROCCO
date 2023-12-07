@@ -137,6 +137,7 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
                     
                         
                    
+
                     echo ' <tbody class="h-[2vh] ">';
                     echo "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bclass='px-6 py-4 font-semibold text-center'>" . $row["agencyId"] . " </td>
                             <td class='px-6 py-4 font-semibold text-center'> " . $row["longitude"] . "</td>
@@ -245,6 +246,7 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
         }
         $conn->close();
         ?>
+
         <form method="post" class="w-[100%] flex justify-center items-center h-[15vh] ">
             <input value="RESET" type="submit" name="reset"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"></input >
         </form>
