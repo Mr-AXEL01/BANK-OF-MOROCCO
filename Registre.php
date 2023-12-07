@@ -28,28 +28,27 @@
                 // Associate user with selected roles in roleofuser table
                 $selectedRoles = isset($_POST['user-type']) ? $_POST['user-type'] : array();
                 foreach ($selectedRoles as $selectedRole) {
-                $roleSelect = "SELECT rolename FROM roles WHERE rolename = ?";
-                $stmtRole = mysqli_prepare($conn, $roleSelect);
-                mysqli_stmt_bind_param($stmtRole, "s", $selectedRole);
-                mysqli_stmt_execute($stmtRole);
-                mysqli_stmt_store_result($stmtRole);
+                    $roleSelect = "SELECT rolename FROM roles WHERE rolename = ?";
+                    $stmtRole = mysqli_prepare($conn, $roleSelect);
+                    mysqli_stmt_bind_param($stmtRole, "s", $selectedRole);
+                    mysqli_stmt_execute($stmtRole);
+                    mysqli_stmt_store_result($stmtRole);
         
-                if (mysqli_stmt_num_rows($stmtRole) > 0) {
-                    // Role exists, proceed with user insertion
-                    $insertRoleOfUser = "INSERT INTO roleofuser (userId, rolename) VALUES (?, ?)";
-                    $stmtRoleOfUser = mysqli_prepare($conn, $insertRoleOfUser);
-                    mysqli_stmt_bind_param($stmtRoleOfUser, "is", $userId, $selectedRole);
-                    mysqli_stmt_execute($stmtRoleOfUser);
+                    if (mysqli_stmt_num_rows($stmtRole) > 0) {
+                        // Role exists, proceed with user insertion
+                        $insertRoleOfUser = "INSERT INTO roleofuser (userId, rolename) VALUES (?, ?)";
+                        $stmtRoleOfUser = mysqli_prepare($conn, $insertRoleOfUser);
+                        mysqli_stmt_bind_param($stmtRoleOfUser, "is", $userId, $selectedRole);
+                        mysqli_stmt_execute($stmtRoleOfUser);
+    
+                    } else {
+                        // Invalid user type
+                        $error[] = 'Invalid user type: ' . $selectedRole;
+                    }
 
-                } else {
-                    // Invalid user type
-                    $error[] = 'Invalid user type: ' . $selectedRole;
                 }
-
             }
         }
-        
-        // ... Rest of your code
         
         
         if (isset($_POST['operation']) && $_POST['editing'] === 'Edit') {
@@ -113,11 +112,6 @@
         ?>
 
 
-
-
-
-
-
         <!DOCTYPE html>
         <html lang="en">
 
@@ -171,7 +165,7 @@
                         <input type="password" name="password" required placeholder="Enter Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none      h-[3rem] w-[85%] p-[5px] rounded">
                         <input type="password" name="cpassword" required placeholder="confirme Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none     h-[3rem] w-[85%] p-[5px] rounded">
                         <div class="w-[85%]">
-                            <select name="user-type"  id="" class="outline-none      h-[40px] p-[5px] w-[50%] rounded">
+                            <select name="user-type[]"  id="" class="outline-none h-[40px] p-[5px] w-[50%] rounded" multiple>
                                 <option value="client">client</option>
                                 <option value="admin">Admin</option>
                             </select>
