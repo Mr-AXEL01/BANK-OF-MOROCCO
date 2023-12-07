@@ -65,7 +65,7 @@ if (isset($_POST['Deletes']) && isset($_POST['bankid'])) {
 <body class ="bg-gray-100  bg-cover">
         <header class="header sticky h-[12vh]  top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 	">
             <!-- logo -->
-            <a href="" class="flex items-center font-bold text-yellow-600	gap-[7px]">
+            <a href="" class="flex items-center font-bold text-blue-950	gap-[7px]">
                 <img src="images/CentralLogo.png" alt="" class="md:h-[60px] md:w-[150px] h-[35px] w-[90px]">
                 ADMIN
             </a>
