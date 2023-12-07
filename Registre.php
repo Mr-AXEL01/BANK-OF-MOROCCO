@@ -40,13 +40,17 @@
                         $stmtRoleOfUser = mysqli_prepare($conn, $insertRoleOfUser);
                         mysqli_stmt_bind_param($stmtRoleOfUser, "is", $userId, $selectedRole);
                         mysqli_stmt_execute($stmtRoleOfUser);
-    
+
+                        
                     } else {
                         // Invalid user type
                         $error[] = 'Invalid user type: ' . $selectedRole;
                     }
 
                 }
+
+                header("Location:adress.php");
+                exit;
             }
         }
         
@@ -147,7 +151,7 @@
                         </p>
                     </div>
 
-                    <form action="adress.php" method="post" class="flex flex-col gap-[19px] h-[70%] md:h-[80%] w-[80%] md:w-[30%] mb-[15px] p-[10px] bg-gray-300/20 items-center justify-center rounded-[20px]">
+                    <form action="Registre.php" method="post" class="flex flex-col gap-[19px] h-[70%] md:h-[80%] w-[80%] md:w-[30%] mb-[15px] p-[10px] bg-gray-300/20 items-center justify-center rounded-[20px]">
                         <h3 class="text-3xl mb-2.5 uppercase font-medium text-gray-900">ADD USER</h3>
         <?php
         if (!empty($error)) {
