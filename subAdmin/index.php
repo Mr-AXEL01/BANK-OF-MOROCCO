@@ -9,63 +9,54 @@ if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['names']);
     $password = $_POST['password'];
 
-    // Use placeholders for password comparison and fetch the hashed password from the database
-   // ...
+    $query = "SELECT users.userId, roleofuser.rolename, roleofuser.userId, users.username, users.pw
+              FROM users 
+              INNER JOIN roleofuser ON users.userId = roleofuser.userId
+              WHERE users.username = ?";
 
-$query = "SELECT users.userId, roleofuser.rolename, roleofuser.userId, users.username, users.pw
-FROM users 
-INNER JOIN roleofuser ON users.userId = roleofuser.userId
-WHERE users.username = ?";
-
-
-
-$stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, "s", $username);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-
-// ...
-
-
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     if ($result) {
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
+        $highestPriorityRole = ''; 
 
-            // Verify hashed password
-            if (password_verify($password, $row['pw'])) {
-                $_SESSION['user_type'] = $row['rolename'];
-                $_SESSION['user_id'] = $row['userId'];
-                $_SESSION['username'] = $row['username'];
-                
-                if (in_array('admin', explode(', ', $row['rolename'])) && in_array('client', explode(', ', $row['rolename']))) {
-                    // User has both 'admin' and 'client' roles
-                    // Add your custom logic here
-                    header("Location: banques.php");
-                    exit;
-                }  elseif (in_array('admin', explode(', ', $row['rolename']))) {
-                    // User has 'admin' role
-                    header("Location: banques.php");
-                    exit;
-                } elseif (in_array('client', explode(', ', $row['rolename']))) {
-                    // User has 'client' role
-                    header("Location: home.php");
-                    exit;
+        while ($row = mysqli_fetch_assoc($result)) {
+            $roles[] = $row["rolename"];
+          
+
+            
+                // Verify hashed password
+                if (password_verify($password, $row['pw'])) {
+                    if (in_array('admin', $roles)) {
+                        $highestPriorityRole = 'admin';
+                    } else if (in_array('subAdmin ', $roles)) {
+                        $highestPriorityRole = 'subAdmin ';
+                    } elseif (in_array('client', $roles) && $highestPriorityRole !== 'admin' && $highestPriorityRole !== 'subAdmin ') {
+                        $highestPriorityRole = 'client';
+                    }
                 } else {
-                    header("Location: users.php");
+                    $error[] = 'Incorrect username or password!';
                 }
                 
-            } else {
-                $error[] = 'Incorrect username or password!';
-            }
-            
+                $_SESSION['user_type']   =  $roles;
+        }
+
+        if ($highestPriorityRole === 'admin') {
+            header("Location: ../banques.php");
+            exit;
+        }elseif ($highestPriorityRole === 'subAdmin ') {
+            header("Location: subAdmin/users.php");
+            exit;
+        } elseif ($highestPriorityRole === 'client') {
+            header("Location: ../home.php");
+            exit;
         } else {
-            $error[] = 'Incorrect username or password!';
         }
     } else {
         $error[] = 'Database query error: ' . mysqli_error($conn);
     }
 
-    // Close the statement
     mysqli_stmt_close($stmt);
 }
 ?>
@@ -96,17 +87,7 @@ $result = mysqli_stmt_get_result($stmt);
     
     <section class=" bg ">
         <div class="min-h-[85vh] w-[90%] m-auto gap-[15px] flex flex-col md:flex-row md:justify-evenly items-center  ">
-        <div class="md:w-[50%] w-[85%] flex flex-col gap-[25px] mt-[15px]">
-            <h1 class ="text-gray-900 text-[45px] md:text-[60px]">CIH BANQUE</h1>
-            <h3 class ="text-gray-900 text-[25px] md:text-[30px]"> Your Gateway to Financial Harmony</h3>
-            <p class ="text-gray-900 text-[15px] md:text-[18px]">
-                CIH Banque is your gateway to financial success, offering personalized solutions <br>
-             expert guidance to navigate your unique financial journey. With a commitment <br>
-             to trust and innovation, we stand as a reliable partner, empowering you to achieve <br>
-             your financial goals seamlessly. Join us for a transformative experience, where your<br>
-              prosperity is our priority.
-            </p>
-        </div>
+
         <?php
 if (!empty($error)) {
     foreach ($error as $err) {

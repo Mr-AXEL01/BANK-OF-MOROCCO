@@ -146,14 +146,13 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
         
                             
                                 </td>
-                                <td >
+                                 <td>
                                 <form action='users.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>
                                 <input type='hidden' name='userid' value='" . $row["userId"] . "'>
                                 <input type='submit'  name='deleteuser' value='Delete' class=' cursor-pointer'>
                               
                             </form>
-                            
-                                    </td>
+                                 </td>
                             <td >
                             <form action='agences.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
                                 <input type='hidden' name='userid' value='" . $row["userId"] . "'>

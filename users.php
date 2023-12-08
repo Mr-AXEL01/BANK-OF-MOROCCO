@@ -2,13 +2,19 @@
 
 
  <?php
-    @include "DataBase.php";
-    
-   
-    
-    if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
-        $id = $_POST['userId'];
-    
+
+    include "DataBase.php";
+
+
+
+    if (isset($_POST['deleteuser']) && isset($_POST['userid'])) {
+        
+        $id = $_POST['userid'];
+
+
+
+
+
         $deletetransaction = "DELETE FROM transaction WHERE accountId IN (SELECT accountId FROM account WHERE userId = $id)";
         $conn->query($deletetransaction);
 

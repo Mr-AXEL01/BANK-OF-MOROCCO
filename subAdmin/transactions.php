@@ -2,17 +2,14 @@
 @include "DataBase.php";
 
 
-// Handle Delete action
 if (isset($_POST['deletetransaction']) && isset($_POST['delete'])) {
     $id = $_POST['delete'];
 
-    // Delete associated records in the 'agency' table
     $deletetransaction = "DELETE FROM transaction WHERE transactionId = $id";
     if ($conn->query($deletetransaction) !== TRUE) {
         echo "Error deleting address: " . $conn->error;
     }
 
-    // Delete the record from the 'agency' table
     if ($type == "credit") {
 
         $update_amount = "
@@ -48,7 +45,6 @@ UPDATE account
 <html lang="en">
 
 <head>
-    <!-- Meta tags and stylesheets go here -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -64,7 +60,7 @@ UPDATE account
 </head>
 
 <body class ="bg-gray-100  bg-cover">
-            <header class="header sticky w-[100%] top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 	">
+<header class="header sticky w-[100%] top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 	">
             <a href="" class="flex items-center font-bold text-blue-950	gap-[7px]">
                 <img src="images/CentralLogo.png" alt="" class="md:h-[60px] md:w-[150px] h-[35px] w-[90px]">
                 ADMIN
@@ -72,13 +68,13 @@ UPDATE account
                 <nav class="nav font-semibold w-[100%] text-lg">
                     <ul class="flex items-center w-[100%] justify-center  ">
 
-                
+                 
 
                         <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
                             <select name="clients" id="selectOptions1" class="outline-none rounded">
-                                <option class="font-semibold text-lg" value="client">Operations</option>
+                                <option class="font-semibold text-lg" value="">Operations</option>
 
-                                <option class="font-semibold text-lg" value="client">Users</option>
+                                <option class="font-semibold text-lg" value="users">Users</option>
                                 <option class="font-semibold text-lg" value="accounts">accounts</option>
                                 <option class="font-semibold text-lg" value="transactions">transactions</option>
                             </select>
@@ -92,9 +88,8 @@ UPDATE account
                     <input type="text" name="search" placeholder="Search UserName..." class="p-2 border border-gray-300 rounded-md" >
                 </form>
             </header>
-            <script src="navbar.js">
+            <script src="header.js"></script>
 
-            </script>
 
             <div class="flex justify-evenly items-center mb-[50px]">
                 <h1 class="text-[50px] h-[10%]  text-center text-black">TRANSACTIONS</h1>

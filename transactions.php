@@ -2,17 +2,14 @@
 @include "DataBase.php";
 
 
-// Handle Delete action
 if (isset($_POST['deletetransaction']) && isset($_POST['delete'])) {
     $id = $_POST['delete'];
 
-    // Delete associated records in the 'agency' table
     $deletetransaction = "DELETE FROM transaction WHERE transactionId = $id";
     if ($conn->query($deletetransaction) !== TRUE) {
         echo "Error deleting address: " . $conn->error;
     }
 
-    // Delete the record from the 'agency' table
     if ($type == "credit") {
 
         

@@ -42,18 +42,7 @@ if (isset($_POST['submit'])) {
 <body>
     <section class=" bg  ">
         <div class="min-h-[85vh] w-[90%] m-auto gap-[15px] flex flex-col md:flex-row md:justify-evenly items-center  ">
-            <div class="md:w-[50%] w-[85%] flex flex-col gap-[25px] mt-[15px]">
-                <h1 class="text-gray-900 text-[45px] md:text-[60px]">CIH BANQUE</h1>
-                <h3 class="text-gray-900 text-[25px] md:text-[30px]"> Your Gateway to Financial Harmony</h3>
-                <p class="text-gray-900 text-[15px] md:text-[18px]">
-                    CIH Banque is your gateway to financial success, offering personalized solutions <br>
-                    expert guidance to navigate your unique financial journey. With a commitment <br>
-                    to trust and innovation, we stand as a reliable partner, empowering you to achieve <br>
-                    your financial goals seamlessly. Join us for a transformative experience, where your<br>
-                    prosperity is our priority.
-                </p>
-            </div>
-
+    
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="flex flex-col gap-[19px] h-[70%] md:h-[80%] w-[80%] md:w-[30%] mb-[15px] p-[10px] bg-gray-300/20 items-center justify-center rounded-[20px]">
                 <h3 class="text-3xl mb-2.5 uppercase font-medium text-gray-900">ADD USER</h3>
 
