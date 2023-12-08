@@ -16,46 +16,43 @@
                 $error[] = 'Password and confirmation password do not match!';
             } else {
                 $pass = password_hash($password, PASSWORD_DEFAULT);
+
+                $insertUser = "INSERT INTO users (firstName, familyName, username, pw) VALUES (?, ?, ?, ?)";
+                 $stmtUser = mysqli_prepare($conn, $insertUser);
+                 mysqli_stmt_bind_param($stmtUser, "ssss", $fname, $lname, $username, $pass);
+                 mysqli_stmt_execute($stmtUser);
+
+                // Get the inserted user's ID
+                $userId = mysqli_insert_id($conn);
+
+                // Associate user with selected roles in roleofuser table
+                $selectedRoles = isset($_POST['user-type']) ? $_POST['user-type'] : array();
+                foreach ($selectedRoles as $selectedRole) {
+                    $roleSelect = "SELECT rolename FROM roles WHERE rolename = ?";
+                    $stmtRole = mysqli_prepare($conn, $roleSelect);
+                    mysqli_stmt_bind_param($stmtRole, "s", $selectedRole);
+                    mysqli_stmt_execute($stmtRole);
+                    mysqli_stmt_store_result($stmtRole);
         
-                // Check if the role exists
-                $roleSelect = "SELECT rolename FROM roles WHERE rolename = ?";
-                $stmtRole = mysqli_prepare($conn, $roleSelect);
-                mysqli_stmt_bind_param($stmtRole, "s", $_POST['user-type']);
-                mysqli_stmt_execute($stmtRole);
-                mysqli_stmt_store_result($stmtRole);
-        
-                if (mysqli_stmt_num_rows($stmtRole) > 0) {
-                    // Role exists, proceed with user insertion
-                    $insert = "INSERT INTO users (firstName, familyName, username, pw)
-                            VALUES (?, ?, ?, ?)";
-                    $stmtUser = mysqli_prepare($conn, $insert);
-                    mysqli_stmt_bind_param($stmtUser, "ssss", $fname, $lname, $username, $pass);
-                    mysqli_stmt_execute($stmtUser);
-        
-                    // Get the inserted user's ID
-                    $userId = mysqli_insert_id($conn);
-        
-                    // Insert role of the user into the roleofuser table
-                    $roleOfUserInsert = "INSERT INTO roleofuser (userId, rolename)
-                                        VALUES (?, ?)";
-                    $stmtRoleOfUser = mysqli_prepare($conn, $roleOfUserInsert);
-                    mysqli_stmt_bind_param($stmtRoleOfUser, "is", $userId, $_POST['user-type']);
-                    mysqli_stmt_execute($stmtRoleOfUser);
-        
-                    // Close the database connection
-                    mysqli_close($conn);
-        
-                    // Redirect after successful registration
-                    header('location: adress.php');
-                    exit; // Exit to ensure the script doesn't continue executing
-                } else {
-                    // Invalid user type
-                    $error[] = 'Invalid user type!';
+                    if (mysqli_stmt_num_rows($stmtRole) > 0) {
+                        // Role exists, proceed with user insertion
+                        $insertRoleOfUser = "INSERT INTO roleofuser (userId, rolename) VALUES (?, ?)";
+                        $stmtRoleOfUser = mysqli_prepare($conn, $insertRoleOfUser);
+                        mysqli_stmt_bind_param($stmtRoleOfUser, "is", $userId, $selectedRole);
+                        mysqli_stmt_execute($stmtRoleOfUser);
+
+                        
+                    } else {
+                        // Invalid user type
+                        $error[] = 'Invalid user type: ' . $selectedRole;
+                    }
+
                 }
+
+                header("Location:adress.php");
+                exit;
             }
         }
-        
-        // ... Rest of your code
         
         
         if (isset($_POST['operation']) && $_POST['editing'] === 'Edit') {
@@ -119,11 +116,6 @@
         ?>
 
 
-
-
-
-
-
         <!DOCTYPE html>
         <html lang="en">
 
@@ -177,14 +169,21 @@
                         <input type="password" name="password" required placeholder="Enter Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none      h-[3rem] w-[85%] p-[5px] rounded">
                         <input type="password" name="cpassword" required placeholder="confirme Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none     h-[3rem] w-[85%] p-[5px] rounded">
                         <div class="w-[85%]">
-                            <select name="user-type"  id="" class="outline-none      h-[40px] p-[5px] w-[50%] rounded">
-                                <option value="client">client</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-            <!-- Other input fields -->
+                            <?php
+                            $sqlrole = "SELECT * FROM roles";
+                            $query = $conn->query($sqlrole);
+                            while ($row = $query->fetch_assoc()) {
+                           
 
-        <!-- Add a hidden input to indicate editing mode -->
+                            
+                            ?>
+                        <label>
+                            <input type="checkbox" name="user-type[]" value="<?= $row["rolename"] ?> " class="mr-2">
+                            <?= $row["rolename"] ?>                        </label>
+                      
+                        <?PHP }?>
+
+                        </div>
 
 
         <?php
