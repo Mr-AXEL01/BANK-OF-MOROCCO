@@ -207,7 +207,7 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
            
             // Fetch data for 'compts' table
 
-            $sqlall = "SELECT * FROM `agency` WHERE is_deleted = FALSE LIMIT $start, $rows_per_page;";
+            $sqlall = "SELECT * FROM `agency` WHERE is_deleted = FALSE LIMIT $start, $rows_per_page";
             $result2 = $conn->query($sqlall);
 
             if ($result2->num_rows > 0) {
@@ -299,6 +299,7 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
 
 
 </div>
+
     </section>
 
     <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
