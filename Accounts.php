@@ -100,7 +100,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
     </section>
 
     <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
-        <h2>Copyright © 2030 Hashtag Developer. All Rights Reserved</h2>
+        <h2>Copyright © 2030 Hashtag Developer. All Rights Reserved.</h2>
     </footer>
     <script>
     function load_data(search = '') {
