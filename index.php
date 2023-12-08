@@ -9,57 +9,44 @@ if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['names']);
     $password = $_POST['password'];
 
-    // Use placeholders for password comparison and fetch the hashed password from the database
-   // ...
+    $query = "SELECT users.userId, roleofuser.rolename, roleofuser.userId, users.username, users.pw
+              FROM users 
+              INNER JOIN roleofuser ON users.userId = roleofuser.userId
+              WHERE users.username = ?";
 
-$query = "SELECT users.userId, roleofuser.rolename, roleofuser.userId, users.username, users.pw
-FROM users 
-INNER JOIN roleofuser ON users.userId = roleofuser.userId
-WHERE users.username = ?";
-
-
-
-$stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, "s", $username);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-
-// ...
-
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
     if ($result) {
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
+        $highestPriorityRole = ''; // Initialize variable to store the highest priority role
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $roles[] = $row['rolename'];
 
             // Verify hashed password
             if (password_verify($password, $row['pw'])) {
-                $_SESSION['user_type'] = $row['rolename'];
-                $_SESSION['user_id'] = $row['userId'];
-                $_SESSION['username'] = $row['username'];
-                
-                // Use in_array to check for roles
-                if (in_array('admin', explode(', ', $row['rolename'])) && in_array('client', explode(', ', $row['rolename']))) {
-                   
-                    
-                    header("Location: banques.php");
-                    exit;
-                } elseif (in_array('admin', explode(', ', $row['rolename']))) {
-                    // User has 'admin' role
-                    header("Location: banques.php");
-                    exit;
-                } elseif (in_array('client', explode(', ', $row['rolename']))) {
-                    // User has 'client' role
-                    header("Location: home.php");
-                    exit;
-                } else {
-                    // Handle other user types if needed
+                // Determine the highest priority role
+                if (in_array('admin', $roles)) {
+                    $highestPriorityRole = 'admin';
+                } elseif (in_array('client', $roles) && $highestPriorityRole !== 'admin') {
+                    $highestPriorityRole = 'client';
                 }
             } else {
                 $error[] = 'Incorrect username or password!';
             }
-            
+        }
+
+        // Redirect based on the highest priority role
+        if ($highestPriorityRole === 'admin') {
+            header("Location: banques.php");
+            exit;
+        } elseif ($highestPriorityRole === 'client') {
+            header("Location: home.php");
+            exit;
         } else {
-            $error[] = 'Incorrect username or password!';
+            // Handle other user types if needed
         }
     } else {
         $error[] = 'Database query error: ' . mysqli_error($conn);
