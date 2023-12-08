@@ -169,18 +169,21 @@
                         <input type="password" name="password" required placeholder="Enter Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none      h-[3rem] w-[85%] p-[5px] rounded">
                         <input type="password" name="cpassword" required placeholder="confirme Your password" value="<?php echo isset($password) ? $password : ''; ?>" class="outline-none     h-[3rem] w-[85%] p-[5px] rounded">
                         <div class="w-[85%]">
-                        <label>
-                            <input type="checkbox" name="user-type[]" value="client" class="mr-2">
-                            Client
-                        </label>
-                        <label>
-                            <input type="checkbox" name="user-type[]" value="admin" class="mr-2">
-                            Admin
-                        </label>
-                        </div>
-            <!-- Other input fields -->
+                            <?php
+                            $sqlrole = "SELECT * FROM roles";
+                            $query = $conn->query($sqlrole);
+                            while ($row = $query->fetch_assoc()) {
+                           
 
-        <!-- Add a hidden input to indicate editing mode -->
+                            
+                            ?>
+                        <label>
+                            <input type="checkbox" name="user-type[]" value="<?= $row["rolename"] ?> " class="mr-2">
+                            <?= $row["rolename"] ?>                        </label>
+                      
+                        <?PHP }?>
+
+                        </div>
 
 
         <?php

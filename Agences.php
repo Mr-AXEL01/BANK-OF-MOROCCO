@@ -32,6 +32,7 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
 
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -139,10 +140,11 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
 
                     echo ' <tbody class="h-[2vh] ">';
                     echo "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bclass='px-6 py-4 font-semibold text-center'>" . $row["agencyId"] . " </td>
-                            <td class='px-6 py-4 font-semibold text-center'> " . $row["longitude"] . "</td>
-                            <td class='px-6 py-4 font-semibold text-center'> " . $row["latitude"] . " </td>
-                            <td class='px-6 py-4 font-semibold text-center'>" . $row["agencyname"] . "</td>
-                            <td class='px-6 py-4 font-semibold text-center'>" . $row["bankId"] . "</td>
+                    <td class='px-6 py-4 font-semibold text-center'>" . $row["agencyId"] . " </td>
+                    <td class='px-6 py-4 font-semibold text-center'> " . $row["longitude"] . "</td>
+                    <td class='px-6 py-4 font-semibold text-center'> " . $row["latitude"] . " </td>
+                    <td class='px-6 py-4 font-semibold text-center'>" . $row["agencyname"] . "</td>
+                    <td class='px-6 py-4 font-semibold text-center'>" . $row["bankId"] . "</td>
 
 
     
@@ -181,15 +183,10 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
             } else {
                 echo "<p class='text-center'>0 results</p>";
             }
-            
-
-            
         } else {
-            
-            // Handle the case when 'submit' and 'bankid' are not set (initial page load)
-            // Fetch data for 'compts' table
+
             $start = 0;
-            $rows_per_page = 5;
+            $rows_per_page = 4;
             
             $record = "SELECT * FROM agency ";
             $result3 = $conn->query($record);
@@ -207,11 +204,11 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
             $sqlATM .= " LIMIT $start, $rows_per_page"; // Append the LIMIT clause here
             $result2 = $conn->query($sqlATM);
             
-            
+           
             // Fetch data for 'compts' table
-           $sqlall = "SELECT * FROM `agency` WHERE is_deleted = FALSE LIMIT $start, $rows_per_page;";
-           $result2 = $conn->query($sqlall);
-            
+
+            $sqlall = "SELECT * FROM `agency` WHERE is_deleted = FALSE LIMIT $start, $rows_per_page;";
+            $result2 = $conn->query($sqlall);
 
             if ($result2->num_rows > 0) {
                 echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
