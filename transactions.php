@@ -104,9 +104,9 @@ UPDATE account
 
             </script>
 
-            <div class="flex justify-evenly items-center mb-[50px]">
-                <h1 class="text-[50px] h-[10%]  text-center text-black">TRANSACTIONS</h1>
-                <a href="registre.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">ADD TRANSACTIONS</a>
+        <div class="flex justify-evenly items-center mb-[50px]">
+            <h1 class="text-[50px] h-[10%]  text-center text-black">TRANSACTIONS</h1>
+            <a href="addtransactions.php" class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 border border-blue-600 rounded">ADD TRANSACTIONS</a>
 
             </div>
             <section class="min-h-[75vh]">
