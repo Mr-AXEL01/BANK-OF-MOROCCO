@@ -1,7 +1,7 @@
 <?php
 
 
-$conn = new mysqli('localhost', 'root', '', 'bankofmorroco');
+$conn = new mysqli('localhost', 'root', '', 'bankofmorocco');
 
 
 
