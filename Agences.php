@@ -115,7 +115,6 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
                 echo "</div>";
             }
 
-            // Fetch data based on the selected bankid for 'agency'
             $sql = "SELECT * FROM `agency` WHERE bankid = '$bankid'";
             $result = $conn->query($sql);
 
@@ -140,10 +139,11 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
 
                     echo ' <tbody class="h-[2vh] ">';
                     echo "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bclass='px-6 py-4 font-semibold text-center'>" . $row["agencyId"] . " </td>
-                            <td class='px-6 py-4 font-semibold text-center'> " . $row["longitude"] . "</td>
-                            <td class='px-6 py-4 font-semibold text-center'> " . $row["latitude"] . " </td>
-                            <td class='px-6 py-4 font-semibold text-center'>" . $row["agencyname"] . "</td>
-                            <td class='px-6 py-4 font-semibold text-center'>" . $row["bankId"] . "</td>
+                    <td class='px-6 py-4 font-semibold text-center'>" . $row["agencyId"] . " </td>
+                    <td class='px-6 py-4 font-semibold text-center'> " . $row["longitude"] . "</td>
+                    <td class='px-6 py-4 font-semibold text-center'> " . $row["latitude"] . " </td>
+                    <td class='px-6 py-4 font-semibold text-center'>" . $row["agencyname"] . "</td>
+                    <td class='px-6 py-4 font-semibold text-center'>" . $row["bankId"] . "</td>
 
 
     

@@ -39,8 +39,8 @@ $result = mysqli_stmt_get_result($stmt);
                 
                 // Use in_array to check for roles
                 if (in_array('admin', explode(', ', $row['rolename'])) && in_array('client', explode(', ', $row['rolename']))) {
-                    // User has both 'admin' and 'client' roles, redirect based on a certain priority
-                    // Add your custom logic here
+                   
+                    
                     header("Location: banques.php");
                     exit;
                 } elseif (in_array('admin', explode(', ', $row['rolename']))) {

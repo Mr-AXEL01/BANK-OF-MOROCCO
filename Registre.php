@@ -43,7 +43,6 @@
 
                         
                     } else {
-                        // Invalid user type
                         $error[] = 'Invalid user type: ' . $selectedRole;
                     }
 
@@ -56,7 +55,6 @@
         
         
         if (isset($_POST['operation']) && $_POST['editing'] === 'Edit') {
-            // Retrieve agency details for editing
             $id = $_POST["userid"];
             $userinfo = "SELECT * FROM users WHERE userid = $id";
             $stk_user_info = $conn->query($userinfo);
