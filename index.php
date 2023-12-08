@@ -37,10 +37,18 @@ $result = mysqli_stmt_get_result($stmt);
                 $_SESSION['user_id'] = $row['userId'];
                 $_SESSION['username'] = $row['username'];
                 
-                if ($_SESSION['user_type'] === 'admin') {
+                // Use in_array to check for roles
+                if (in_array('admin', explode(', ', $row['rolename'])) && in_array('client', explode(', ', $row['rolename']))) {
+                    // User has both 'admin' and 'client' roles, redirect based on a certain priority
+                    // Add your custom logic here
                     header("Location: banques.php");
                     exit;
-                } elseif ($_SESSION['user_type'] === 'client') {
+                } elseif (in_array('admin', explode(', ', $row['rolename']))) {
+                    // User has 'admin' role
+                    header("Location: banques.php");
+                    exit;
+                } elseif (in_array('client', explode(', ', $row['rolename']))) {
+                    // User has 'client' role
                     header("Location: home.php");
                     exit;
                 } else {
