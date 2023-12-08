@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['names']);
     $password = $_POST['password'];
 
-    $query = "SELECT users.userId, roleofuser.rolename, roleofuser.userId, users.username, users.pw
+    $query = "SELECT users.userId, roleofuser.rolename, users.pw
               FROM users 
               INNER JOIN roleofuser ON users.userId = roleofuser.userId
               WHERE users.username = ?";
@@ -30,7 +30,9 @@ if (isset($_POST['submit'])) {
                 // Determine the highest priority role
                 if (in_array('admin', $roles)) {
                     $highestPriorityRole = 'admin';
-                } elseif (in_array('client', $roles) && $highestPriorityRole !== 'admin') {
+                } elseif (in_array('subAdmin ', $roles) && $highestPriorityRole !== 'admin') {
+                    $highestPriorityRole = 'subAdmin ';
+                } elseif (in_array('client', $roles) && $highestPriorityRole !== 'admin' && $highestPriorityRole !== 'subAdmin ') {
                     $highestPriorityRole = 'client';
                 }
             } else {
@@ -41,13 +43,14 @@ if (isset($_POST['submit'])) {
         // Redirect based on the highest priority role
         if ($highestPriorityRole === 'admin') {
             header("Location: banques.php");
-            exit;
+        } elseif ($highestPriorityRole === 'subAdmin ') {
+            header("Location: subAdmin/users.php");
         } elseif ($highestPriorityRole === 'client') {
             header("Location: home.php");
-            exit;
         } else {
             // Handle other user types if needed
         }
+
     } else {
         $error[] = 'Database query error: ' . mysqli_error($conn);
     }

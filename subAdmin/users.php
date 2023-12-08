@@ -6,11 +6,11 @@
 
     @include "DataBase.php";
 
-if($_SESSION['user_type'] !== 'subAdmin'){
+// if($_SESSION['user_type'] !== 'subAdmin'){
 
-    header("Location: index.php");
+//     header("Location: index.php");
 
-}
+// }
 
     if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
         $id = $_POST['userId'];
