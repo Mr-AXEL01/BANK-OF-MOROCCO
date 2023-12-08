@@ -207,10 +207,7 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
            
             // Fetch data for 'compts' table
 
-
             $sqlall = "SELECT * FROM `agency` WHERE is_deleted = FALSE LIMIT $start, $rows_per_page";
-          $result2 = $conn->query($sqlall);
-
             $result2 = $conn->query($sqlall);
 
             if ($result2->num_rows > 0) {
