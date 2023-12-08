@@ -1,7 +1,9 @@
 
 <?php
+session_start();
 
-@include "../DataBase.php";
+include "../DataBase.php";
+
 
 
 
@@ -38,6 +40,8 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
+                    
+                 
                     echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
                     echo '<thead class="text-xs text-gray-700 upperclass=" w-[11%] px-6 py-3 text-center" scope="col"                    <tr>
                                 <th class=" w-[11%] px-6 py-3 text-center" scope="col">User Name</th>

@@ -6,8 +6,9 @@
 
 
 
-    if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
-        $id = $_POST['userId'];
+    if (isset($_POST['deleteuser']) && isset($_POST['userid'])) {
+        
+        $id = $_POST['userid'];
 
 
 

@@ -44,7 +44,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 </head>
 
 <body>
-    <header class="header sticky w-[100%] top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 	">
+<header class="header sticky w-[100%] top-0 bg-white shadow-md flex items-center justify-between px-8 py-02 z-50 	">
             <a href="" class="flex items-center font-bold text-blue-950	gap-[7px]">
                 <img src="images/CentralLogo.png" alt="" class="md:h-[60px] md:w-[150px] h-[35px] w-[90px]">
                 ADMIN
@@ -52,12 +52,13 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                 <nav class="nav font-semibold w-[100%] text-lg">
                     <ul class="flex items-center w-[100%] justify-center  ">
 
-                
+                 
+
                         <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
                             <select name="clients" id="selectOptions1" class="outline-none rounded">
-                                <option class="font-semibold text-lg" value="client">Operations</option>
+                                <option class="font-semibold text-lg" value="">Operations</option>
 
-                                <option class="font-semibold text-lg" value="client">Users</option>
+                                <option class="font-semibold text-lg" value="users">Users</option>
                                 <option class="font-semibold text-lg" value="accounts">accounts</option>
                                 <option class="font-semibold text-lg" value="transactions">transactions</option>
                             </select>
@@ -71,7 +72,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                     <input type="text" name="search" placeholder="Search UserName..." class="p-2 border border-gray-300 rounded-md" >
                 </form>
             </header>
-        <script src="navbar.js"> </script>
+            <script src="header.js"></script>
 
 
         <div class="flex justify-evenly items-center mb-[50px]">

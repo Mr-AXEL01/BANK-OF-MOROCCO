@@ -18,11 +18,11 @@ if (isset($_POST['submit'])) {
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
-
     if ($result) {
-        $highestPriorityRole = ''; // Initialize variable to store the highest priority role
+        $highestPriorityRole = ''; 
 
         while ($row = mysqli_fetch_assoc($result)) {
+
             $roles[] = $row['rolename'];
 
             // Verify hashed password
@@ -35,27 +35,24 @@ if (isset($_POST['submit'])) {
                 } elseif (in_array('client', $roles) && $highestPriorityRole !== 'admin' && $highestPriorityRole !== 'subAdmin ') {
                     $highestPriorityRole = 'client';
                 }
-            } else {
-                $error[] = 'Incorrect username or password!';
-            }
+                
+                $_SESSION['user_type']   =  $roles;
         }
 
-        // Redirect based on the highest priority role
         if ($highestPriorityRole === 'admin') {
             header("Location: banques.php");
         } elseif ($highestPriorityRole === 'subAdmin ') {
             header("Location: subAdmin/users.php");
+          
         } elseif ($highestPriorityRole === 'client') {
             header("Location: home.php");
         } else {
-            // Handle other user types if needed
         }
 
     } else {
         $error[] = 'Database query error: ' . mysqli_error($conn);
     }
 
-    // Close the statement
     mysqli_stmt_close($stmt);
 }
 ?>

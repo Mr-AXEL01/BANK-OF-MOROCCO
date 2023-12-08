@@ -6,7 +6,9 @@
 
     @include "DataBase.php";
 
+
 // if($_SESSION['user_type'] !== 'subAdmin'){
+
 
 //     header("Location: index.php");
 
@@ -76,9 +78,9 @@
 
                         <li class="p-4 border-b-2 border-blue-500 border-opacity-0 hover:border-opacity-100 hover:text-blue-500 duration-200 cursor-pointer">
                             <select name="clients" id="selectOptions1" class="outline-none rounded">
-                                <option class="font-semibold text-lg" value="client">Operations</option>
+                                <option class="font-semibold text-lg" value="">Operations</option>
 
-                                <option class="font-semibold text-lg" value="client">Users</option>
+                                <option class="font-semibold text-lg" value="users">Users</option>
                                 <option class="font-semibold text-lg" value="accounts">accounts</option>
                                 <option class="font-semibold text-lg" value="transactions">transactions</option>
                             </select>
@@ -92,9 +94,7 @@
                     <input type="text" name="search" placeholder="Search UserName..." class="p-2 border border-gray-300 rounded-md" >
                 </form>
             </header>
-            <script src="navbar.js">
-
-            </script>
+            <script src="header.js"></script>
 
             <div class="flex justify-evenly items-center mb-[50px]">
                 <h1 class="text-[50px] h-[10%]  text-center text-black">USERS</h1>
