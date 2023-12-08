@@ -78,7 +78,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                         
                                 </td>
                                 <td >
-                                <form action='accounts.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
+                                <form action='agences.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
                                     <input type='hidden' name='userid' value='" . $row["userid"] . "'>
                                     <input type='submit'  name='submit' value='Show' class=' cursor-pointer'>
                                 </form>
@@ -94,6 +94,25 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
             
                 $sqlATM = "SELECT * FROM users WHERE username LIKE '%$searchTerm%' ORDER BY username ASC";
                 $result2 = $conn->query($sqlATM);
+
+                $start = 0;
+            $rows_per_page = 5;
+            
+            $record = "SELECT * FROM users ";
+            $result3 = $conn->query($record);
+            $num_rows = mysqli_num_rows($result3);
+            
+            $sqlATM = "SELECT * FROM users"; // Move the definition here
+            
+            $pages = ceil($num_rows / $rows_per_page);
+            
+            if (isset($_GET['page-nr'])) {
+                $page = $_GET['page-nr'] - 1;
+                $start = $page * $rows_per_page;
+            }
+            
+            $sqlATM .= " LIMIT $start, $rows_per_page"; // Append the LIMIT clause here
+            $result2 = $conn->query($sqlATM);
 
                 if ($result2->num_rows > 0) {
                     echo '<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">';
@@ -131,10 +150,11 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                                 <form action='users.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>
                                 <input type='hidden' name='userid' value='" . $row["userId"] . "'>
                                 <input type='submit'  name='deleteuser' value='Delete' class=' cursor-pointer'>
+                              
                             </form>
                                  </td>
                             <td >
-                            <form action='accounts.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
+                            <form action='agences.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
                                 <input type='hidden' name='userid' value='" . $row["userId"] . "'>
                                 <input type='submit'  name='submit' value='Show' class=' cursor-pointer'>
                             </form>
@@ -149,4 +169,41 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
             }
             $conn->close();
             ?>
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Document</title>
+            </head>
+            <body>
+            <div class="flex justify-center items-center mt-10">
+
+<nav aria-label="Page navigation example">
+    <ul class="inline-flex -space-x-px">
+        <li>
+
+            <a href="?page-nr=1"
+                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+
+
+            </li>
+        <li>
+            <?php for($counter = 1; $counter <= $pages ; $counter++)  {?>
+            <a href="?page-nr=<?=$counter;?>"
+                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?= $counter;?></a>
+       <?php  } ?>
+            </li>
+
+        <li>
+            <a href="?page-nr=<?=$pages ?>"
+                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+        </li>
+    </ul>
+</nav>
+
+
+</div>
+            </body>
+            </html>
             

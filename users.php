@@ -2,6 +2,7 @@
 
 
  <?php
+
     include "DataBase.php";
 
 
@@ -9,6 +10,7 @@
     if (isset($_POST['deleteuser']) && isset($_POST['userid'])) {
         
         $id = $_POST['userid'];
+
 
 
 
@@ -31,11 +33,11 @@
         $deleteuser = "DELETE FROM users WHERE userId = $id";
         $conn->query($deleteuser);
     }
+    
 
     $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
-
-
     ?>
+
 
 
     <!DOCTYPE html>
@@ -111,8 +113,8 @@
 
 
 
-
             </div>
+            
         </section>
 
         <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
