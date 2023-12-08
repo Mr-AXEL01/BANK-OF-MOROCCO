@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
             header("Location: ../banques.php");
             exit;
         }elseif ($highestPriorityRole === 'subAdmin ') {
-            header("Location: subAdmin/users.php");
+            header("Location: users.php");
             exit;
         } elseif ($highestPriorityRole === 'client') {
             header("Location: ../home.php");
