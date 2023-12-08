@@ -15,6 +15,7 @@ if (isset($_POST['deletetransaction']) && isset($_POST['delete'])) {
     // Delete the record from the 'agency' table
     if ($type == "credit") {
 
+        
         $update_amount = "
 UPDATE account
             SET balance =   balance + $amount
