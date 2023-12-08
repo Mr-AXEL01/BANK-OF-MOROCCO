@@ -2,7 +2,7 @@
 
 
  <?php
-    @include "DataBase.php";
+    include "DataBase.php";
 
 
 
