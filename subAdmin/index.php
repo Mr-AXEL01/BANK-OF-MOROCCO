@@ -9,7 +9,8 @@ if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['names']);
     $password = $_POST['password'];
 
-    $query = "SELECT users.userId, roleofuser.rolename, roleofuser.userId, users.username, users.pw
+
+    $query = "SELECT users.userId, roleofuser.rolename, users.pw
               FROM users 
               INNER JOIN roleofuser ON users.userId = roleofuser.userId
               WHERE users.username = ?";
@@ -20,7 +21,11 @@ if (isset($_POST['submit'])) {
     $result = mysqli_stmt_get_result($stmt);
 
     if ($result) {
-        $highestPriorityRole = ''; 
+
+        $highestPriorityRole = ''; // Initialize variable to store the highest priority role
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $roles[] = $row['rolename'];
 
         while ($row = mysqli_fetch_assoc($result)) {
             $roles[] = $row['rolename'];
@@ -30,7 +35,8 @@ var_dump($roles);
                 // Determine the highest priority role
                 if (in_array('admin', $roles)) {
                     $highestPriorityRole = 'admin';
-                }else if (in_array('subAdmin ', $roles)) {
+                  
+                } elseif (in_array('subAdmin ', $roles) && $highestPriorityRole !== 'admin') {
                     $highestPriorityRole = 'subAdmin ';
                 } elseif (in_array('client', $roles) && $highestPriorityRole !== 'admin' && $highestPriorityRole !== 'subAdmin ') {
                     $highestPriorityRole = 'client';
@@ -42,17 +48,15 @@ var_dump($roles);
 
         // Redirect based on the highest priority role
         if ($highestPriorityRole === 'admin') {
-            header("Location: ../banques.php");
-            exit;
-        } elseif ($highestPriorityRole === 'client') {
-            header("Location: ../home.php");
-            exit;
+            header("Location: banques.php");
         } elseif ($highestPriorityRole === 'subAdmin ') {
-            header("Location: users.php");
-            exit;
-        }else {
+            header("Location: subAdmin/users.php");
+        } elseif ($highestPriorityRole === 'client') {
+            header("Location: home.php");
+        } else {
             // Handle other user types if needed
         }
+
     } else {
         $error[] = 'Database query error: ' . mysqli_error($conn);
     }

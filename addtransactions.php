@@ -19,19 +19,45 @@ if (isset($_POST['submit'])) {
     $operation = mysqli_real_escape_string($conn, $_POST['operation-type']);
     $amount = mysqli_real_escape_string($conn, $_POST['amount']);
 
-    $accountid = $_POST['accountId'];;
+    $accountid = $_POST['accountId'];
+    $selecttQuery = "SELECT balance FROM account WHERE accountId = $accountid;
+    "; 
+    
+    $stk_trns_info = $conn->query($selecttQuery);
+    $row = mysqli_fetch_assoc($stk_trns_info);
+    $balace = $row["balance"];
 
 
     // Insert new bank into the 'bank' table
+    if ($operation == 'Debit'||  $operation == 'Credit' && ($balace - $amount) >= 0) { 
+
     $insertQuery = "INSERT INTO transaction (trans_type, amount,accountId)
      VALUES 
      ('$operation', '$amount', '$accountid')";
+     $conn->query($insertQuery);
 
-    $conn->query($insertQuery);
+    if ($operation == 'Debit') {
+        $totale = $balace + $amount;
+        $insertQuery = "UPDATE account SET   balance = $totale WHERE accountId = $accountid;";
+        $conn->query($insertQuery);
+    }else {
+        $totale = $balace - $amount;
+        $insertQuery = "UPDATE account SET   balance = $totale  WHERE accountId = $accountid;";
+        $conn->query($insertQuery);
+    }
 
     header('location: transactions.php');
+    die();
+    }else{
+        echo "the balance does not change !!";
+        header("location: addtransactions.php");
+        die();
+    }
 }
-if (isset($_POST['transactionid']) && $_POST['editing'] === 'Edit') {
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ( isset($_POST['transactionid']) && $_POST['editing'] === 'Edit') {
     // Retrieve agency details for editing
     $id = $_POST["transactionid"];
     $transactioninfo = "SELECT * FROM transaction WHERE transactionId = $id";
@@ -84,7 +110,7 @@ if ($type == "credit") {
 
 }
 }
-
+}
 
 ?>
 

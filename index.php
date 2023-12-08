@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['names']);
     $password = $_POST['password'];
 
-    $query = "SELECT users.userId, roleofuser.rolename, roleofuser.userId, users.username, users.pw
+    $query = "SELECT users.userId, roleofuser.rolename, users.pw
               FROM users 
               INNER JOIN roleofuser ON users.userId = roleofuser.userId
               WHERE users.username = ?";
@@ -22,21 +22,18 @@ if (isset($_POST['submit'])) {
         $highestPriorityRole = ''; 
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $roles[] = $row["rolename"];
-          
 
-            
-                // Verify hashed password
-                if (password_verify($password, $row['pw'])) {
-                    if (in_array('admin', $roles)) {
-                        $highestPriorityRole = 'admin';
-                    } else if (in_array('subAdmin ', $roles)) {
-                        $highestPriorityRole = 'subAdmin ';
-                    } elseif (in_array('client', $roles) && $highestPriorityRole !== 'admin' && $highestPriorityRole !== 'subAdmin ') {
-                        $highestPriorityRole = 'client';
-                    }
-                } else {
-                    $error[] = 'Incorrect username or password!';
+            $roles[] = $row['rolename'];
+
+            // Verify hashed password
+            if (password_verify($password, $row['pw'])) {
+                // Determine the highest priority role
+                if (in_array('admin', $roles)) {
+                    $highestPriorityRole = 'admin';
+                } elseif (in_array('subAdmin ', $roles) && $highestPriorityRole !== 'admin') {
+                    $highestPriorityRole = 'subAdmin ';
+                } elseif (in_array('client', $roles) && $highestPriorityRole !== 'admin' && $highestPriorityRole !== 'subAdmin ') {
+                    $highestPriorityRole = 'client';
                 }
                 
                 $_SESSION['user_type']   =  $roles;
@@ -44,15 +41,14 @@ if (isset($_POST['submit'])) {
 
         if ($highestPriorityRole === 'admin') {
             header("Location: banques.php");
-            exit;
-        }elseif ($highestPriorityRole === 'subAdmin ') {
+        } elseif ($highestPriorityRole === 'subAdmin ') {
             header("Location: subAdmin/users.php");
-            exit;
+          
         } elseif ($highestPriorityRole === 'client') {
             header("Location: home.php");
-            exit;
         } else {
         }
+
     } else {
         $error[] = 'Database query error: ' . mysqli_error($conn);
     }

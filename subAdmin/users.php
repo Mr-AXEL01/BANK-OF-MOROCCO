@@ -6,7 +6,9 @@
 
     @include "DataBase.php";
 
-// if($_SESSION['user_type'] != 'subAdmin'){
+
+// if($_SESSION['user_type'] !== 'subAdmin'){
+
 
 //     header("Location: index.php");
 

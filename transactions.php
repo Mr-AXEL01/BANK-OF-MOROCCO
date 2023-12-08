@@ -12,6 +12,7 @@ if (isset($_POST['deletetransaction']) && isset($_POST['delete'])) {
 
     if ($type == "credit") {
 
+        
         $update_amount = "
 UPDATE account
             SET balance =   balance + $amount
