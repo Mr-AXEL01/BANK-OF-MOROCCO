@@ -3,15 +3,12 @@
 
  <?php
     @include "DataBase.php";
-
-
-
+    
+   
+    
     if (isset($_POST['deleteuser']) && isset($_POST['userId'])) {
         $id = $_POST['userId'];
-
-
-
-
+    
         $deletetransaction = "DELETE FROM transaction WHERE accountId IN (SELECT accountId FROM account WHERE userId = $id)";
         $conn->query($deletetransaction);
 
@@ -30,11 +27,11 @@
         $deleteuser = "DELETE FROM users WHERE userId = $id";
         $conn->query($deleteuser);
     }
+    
 
     $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
-
-
     ?>
+
 
 
     <!DOCTYPE html>
@@ -110,8 +107,8 @@
 
 
 
-
             </div>
+            
         </section>
 
         <footer class="text-center h-[5vh] text-white bg-black flex items-center justify-center">
