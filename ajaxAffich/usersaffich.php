@@ -78,7 +78,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                         
                                 </td>
                                 <td >
-                                <form action='agences.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
+                                <form action='accounts.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
                                     <input type='hidden' name='userid' value='" . $row["userid"] . "'>
                                     <input type='submit'  name='submit' value='Show' class=' cursor-pointer'>
                                 </form>
@@ -135,7 +135,7 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                             
                                     </td>
                             <td >
-                            <form action='agences.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
+                            <form action='accounts.php' method='post' class=' cursor-pointer text-center focus:outline-none text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-900'>
                                 <input type='hidden' name='userid' value='" . $row["userId"] . "'>
                                 <input type='submit'  name='submit' value='Show' class=' cursor-pointer'>
                             </form>

@@ -115,7 +115,6 @@ if (isset($_POST['deleteagency']) && isset($_POST['delete'])) {
                 echo "</div>";
             }
 
-            // Fetch data based on the selected bankid for 'agency'
             $sql = "SELECT * FROM `agency` WHERE bankid = '$bankid'";
             $result = $conn->query($sql);
 
