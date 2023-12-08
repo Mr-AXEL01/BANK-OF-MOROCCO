@@ -1,6 +1,6 @@
 <?php
 
-$conn = new mysqli('localhost', 'root', '', 'bankofmorroco');
+$conn = new mysqli('localhost', 'root', '', 'bankofmorocco');
 // $softDelete = "UPDATE agency set is_deleted = FALSE ;";
 // echo 'THE ADDING IS COMPLETE';
 // try {
